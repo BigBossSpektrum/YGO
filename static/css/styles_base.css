@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Jaro:opsz@6..72&family=Lobster&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+sidebar{
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 10rem 1fr; 
+}
+
+.mainMenu{
+    display: inline-flex;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #1f1f1f;
+    max-width: 100hv;
+}
+
+#search{
+    width: 200px;
+    height: 35px;
+}
+
+.navbar_sidebar_style{
+    background-color: #2b2b2b;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 10px;
+    font-size: small;
+    width: 100%;
+
+}
+
+.link_styledLink{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.link_styledMenu{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.link_name{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 10px;
+}
+
+.btn-manager{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 19px;
+}
+
+.btn-deck{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 55px;
+}
+
+.link_logoLinked{
+    width: 30px;
+    border-radius: 50px;
+}
+
+.mainMenu_link{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mainMenu_styledLink{
+    text-decoration: none;
+    color: white;
+}
+
+.mainMenu_separador{
+    color: gray;
+    font-size: 8PX;
+    font-weight: 400;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 800;
+        
+}
+
+.column{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.mainMenu_styledName{
+    font-size: 10px;
+}
