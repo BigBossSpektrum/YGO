@@ -5,7 +5,7 @@ from django.shortcuts import render
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 # api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Decode%20Talker'
 
-def get_card(request):
+def get_cards(request):
     response = requests.get(api_url)
     data = response.json()
 
