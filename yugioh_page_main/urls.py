@@ -21,8 +21,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', render, {'template_name': 'base.html'}),
-    path('polls/', include('polls.urls')),
+    path('', render, {'template_name': 'base.html'}, name='home'),
+    path('polls/', include('polls.urls'), name='polls'),
     path('api/', include('api_yugioh.urls')),
     path('ygo/', include('api_yugioh.urls')),
     path('search/', include('api_yugioh.urls')),

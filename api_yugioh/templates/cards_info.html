@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles_api.css' %}">
+{% block content_cards %}
+    <div onload="fetchCards()">
+        <h1>50 Yu-Gi-Oh! Cards</h1>
+        <div id="cards-container">
+            {% for card in cards %}
+                <div class="card">
+                    <a href="{{ card.ygoprodeck_url }}">
+                        <!-- <h3>{{ card.name }}</h3> -->
+                        <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+                    </a>
+                    <!-- <h2>{{ card.card_prices.0.tcgplayer_price }}$</h2> -->
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'get_cards' %}">Back to 50 top</a><br>
+        <a href="{% url 'search_card' %}">Search for a card</a>
+
+        <h1>Search Yu-Gi-Oh! Cards</h1>
+        <form method="GET" action="{% url 'search_card' %}">
+            <input type="text" name="q" value="{{ query }}" placeholder="Enter card name">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+   {% endblock content_cards %}

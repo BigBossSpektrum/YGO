@@ -10,8 +10,7 @@ def get_cards(request):
     data = response.json()
 
     cards = random.sample(data['data'], 50) #obtener solo los primeros 10 elementos
-    return render (request, 'api_yugioh.html', {'cards': cards})
-
+    return render (request, 'cards_info.html', {'cards': cards})
 
 def search_card(request):
     query = request.GET.get('q')
@@ -19,4 +18,4 @@ def search_card(request):
     if query:
         response = requests.get(f'{api_url}?name={query}')
         cards = response.json().get('data', [])
-    return render(request, 'api_yugioh.html', {'cards': cards, 'query': query})
+    return render(request, 'cards_info.html', {'cards': cards, 'query': query})
