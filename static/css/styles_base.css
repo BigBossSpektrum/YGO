@@ -21,14 +21,6 @@ sidebar{
     max-width: 100hv;
 }
 
-#sendData{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
 .mainMenu_buttons{
     display: flex;
     flex-direction: row;
@@ -218,4 +210,30 @@ sidebar{
 }
 img {
     width: 100%;
+}
+
+.mainMenu_search {
+    display: flex;
+    align-items: center;
+}
+
+.mainMenu_search input[type="search"] {
+    padding: 10px;
+    border: none; /* Elimina los bordes */
+    border-radius: 25px; /* Borde redondeado */
+    outline: none; /* Elimina el borde al hacer clic */
+    background-color: #f2f2f2; /* Fondo del campo */
+    width: 450px;
+    box-sizing: border-box;
+    opacity: 0.8;
+}
+
+.mainMenu_search a {
+    margin-left: 10px; /* Espacio entre el input y el ícono */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.mainMenu_search i {
+    font-size: 24px; /* Tamaño del ícono */
+    color: #ffffff; /* Color blanco para el ícono */
 }
