@@ -206,7 +206,7 @@ sidebar{
 }
 .card {
     text-align: center;
-
+    
 }
 img {
     width: 100%;
@@ -236,4 +236,9 @@ img {
 .mainMenu_search i {
     font-size: 24px; /* Tamaño del ícono */
     color: #ffffff; /* Color blanco para el ícono */
+}
+
+.card{
+    display: flex;
+    max-width: 100vh;
 }

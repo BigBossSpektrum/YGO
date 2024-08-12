@@ -16,7 +16,7 @@ def card_info_view(request):
         cards = response.json()['data']
         
         # Selecciona 50 cartas al azar
-        random_cards = random.sample(cards, 50)
+        random_cards = random.sample(cards, 40)
         
         # Pasar las cartas a la plantilla
         context = {'cards': random_cards}

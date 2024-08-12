@@ -33,10 +33,7 @@
     {% if cards %}
         {% for card in cards %}
             <div class="card">
-                <!-- <h2>{{ card.name }}</h2> -->
-                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
-                <!-- <p>Tipo: {{ card.type }}</p> -->
-                <!-- <p>Descripción: {{ card.desc }}</p> -->
+                <a href="{{ card.ygoprodeck_url }}"><img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}"></a>
             </div>
         {% endfor %}
     {% else %}
