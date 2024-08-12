@@ -21,6 +21,14 @@ sidebar{
     max-width: 100hv;
 }
 
+#sendData{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 .mainMenu_buttons{
     display: flex;
     flex-direction: row;
@@ -184,14 +192,6 @@ sidebar{
 
 .btn-signup:hover{
     background-color: #206fee;
-}
-
-.mainMenu_search{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
 }
 
 .content {

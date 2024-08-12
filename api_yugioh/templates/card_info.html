@@ -1,0 +1,8 @@
+{% load static %}
+
+
+{% for card in cards %}
+<li>
+    <strong>{{ card.name }}</strong> - {{ card.type }} - {{ card.desc }}
+</li>
+{% endfor %}

@@ -1,19 +1,6 @@
 {% load static %}
 
-<div class="mainMenu">
-    <div class="mainMenu_search">
-        <input id="search" type="search" placeholder="Search">
-        <a href=""><i class="fa-solid fa-shuffle" style="color: #ffffff;"></i></a>
-        
-    </div>
-    <div class="mainMenu_buttons">
-        <a href=""><i class="fa-solid fa-language"></i></a>
-        <a href=""><i class="fa-solid fa-moon"></i></a>
-        <a href=""><i class="fa-solid fa-dollar-sign"></i></a>
-        <a href="" class="btn-login">Login In</a>
-        <a href="" class="btn-signup">Sing Up</a>
-    </div>
-</div>
+<link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
 
 <!-- <div class="column">
     <div class="column1">
@@ -42,7 +29,11 @@
     </div>
 </div> -->
 
-<div class="">
-    {% include "cards_info.html" %}
+<div id="cards-container">
+    {% for card in cards %}
+        <li>
+            <strong>{{ card.name }}</strong> - {{ card.type }} - {{ card.desc }}
+        </li>
+    {% endfor %}
 </div>
 
