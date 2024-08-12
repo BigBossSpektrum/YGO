@@ -30,10 +30,17 @@
 </div> -->
 
 <div id="cards-container">
-    {% for card in cards %}
-        <li>
-            <strong>{{ card.name }}</strong> - {{ card.type }} - {{ card.desc }}
-        </li>
-    {% endfor %}
+    {% if cards %}
+        {% for card in cards %}
+            <div class="card">
+                <!-- <h2>{{ card.name }}</h2> -->
+                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+                <!-- <p>Tipo: {{ card.type }}</p> -->
+                <!-- <p>Descripción: {{ card.desc }}</p> -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No se pudieron obtener las cartas.</p>
+    {% endif %}
 </div>
 

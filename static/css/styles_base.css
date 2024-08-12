@@ -208,3 +208,14 @@ sidebar{
     padding-left: 20px;
 }
 
+#cards-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+.card {
+    text-align: center;
+
+}
+img {
+    width: 100%;
+}
