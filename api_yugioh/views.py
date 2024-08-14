@@ -20,7 +20,29 @@ def card_info_view(request):
         
         # Pasar las cartas a la plantilla
         context = {'cards': random_cards}
-        return render(request, 'base.html', context)
+        return render(request, 'base_main.html', context)
     else:
         # En caso de error, puedes manejarlo aquí
-        return render(request, 'base.html', {'error': 'No se pudieron obtener las cartas de la API'})
+        return render(request, 'base_main.html', {'error': 'No se pudieron obtener las cartas de la API'})
+
+
+def home(request):
+    return render(request, 'index.html')
+
+def card_info(request, card_name):
+    return render(request, 'card_info.html', {'card_name': card_name})
+
+def search_card(request):
+    return render(request, 'search_card.html')
+
+def random_card(request):
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        cards = response.json()['data']
+
+    random_card = random.choice(cards)
+    context = {'card': random_card}
+
+    return render(request, 'random_card.html', context)
+

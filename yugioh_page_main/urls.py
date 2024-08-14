@@ -18,15 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 from django.conf import settings
+from api_yugioh import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', render, {'template_name': 'base.html'}, name='home'),
-    path('polls/', include('polls.urls'), name='polls'),
-    path('api/', include('api_yugioh.urls')),
-    path('ygo/', include('api_yugioh.urls')),
-    path('search/', include('api_yugioh.urls')),
-    path('cards/', include('api_yugioh.urls')),
+    path('', include('api_yugioh.urls')),
 ]
 
 

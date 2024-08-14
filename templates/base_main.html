@@ -1,4 +1,4 @@
-{% load static %}
+{% extends 'base.html' %}
 
 <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
 
@@ -28,7 +28,8 @@
         </div>
     </div>
 </div> -->
-
+{% block content %}
+<h1>prueba</h1>
 <div id="cards-container">
     {% if cards %}
         {% for card in cards %}
@@ -40,4 +41,4 @@
         <p>No se pudieron obtener las cartas.</p>
     {% endif %}
 </div>
-
+{% endblock %}

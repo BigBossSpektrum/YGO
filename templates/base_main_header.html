@@ -4,9 +4,9 @@
 
 <div class="mainMenu">
 
-    <form class="mainMenu_search" method="GET" action="">
+    <form class="mainMenu_search" method="GET" action=""> <!-- falta el action para buscar una carta -->
         <input id="sendData" type="search" name="q" value="{{ query }}" placeholder="Search Yu-Gi-Oh! Cards">
-        <a href=""><i class="fa-solid fa-shuffle" style="color: #ffffff;"></i></a>
+        <a href="{% url 'random_card' %}"><i class="fa-solid fa-shuffle" style="color: #ffffff;"></i></a>
     </form>
     
     <div class="mainMenu_buttons">

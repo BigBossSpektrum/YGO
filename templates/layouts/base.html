@@ -20,9 +20,9 @@
     </sidebar>
     <div class="content">
         {% include "base_main_header.html" %}  
-        {% include "base_main.html" %}
+        {% block content %}{% endblock %}
+        {% include "base_footer.html" %}
     </div>
-    {% include "base_footer.html" %}
 
 
 </body>

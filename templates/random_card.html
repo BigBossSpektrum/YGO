@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Random Card</h1>
+
+<div class="card">
+    <div>
+    <!-- <a href="{{ card.ygoprodeck_url }}"><img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}"></a> -->
+    <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+        {% for image in card.card_images %}{% endfor %}
+
+    </div>
+    <div>
+        <h1>{{ card.name }}</h1>
+        <span>{{ card.desc }}</span>
+
+    </div>
+</div>
+
+{% endblock %}
