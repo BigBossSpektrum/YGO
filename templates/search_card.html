@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Buscar Cartas</h1>
+    
+<div class="card-container">
+    {% if cards %}
+        {% for card in cards %}
+            <div class="card">
+                <h2>{{ card.name }}</h2>
+                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+                <p>Tipo: {{ card.type }}</p>
+                <p>Descripción: {{ card.desc }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron cartas.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

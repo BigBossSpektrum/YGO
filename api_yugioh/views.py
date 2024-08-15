@@ -32,8 +32,13 @@ def home(request):
 def card_info(request, card_name):
     return render(request, 'card_info.html', {'card_name': card_name})
 
-def search_card(request):
-    return render(request, 'search_card.html')
+def search_cards(request):
+    query = request.GET.get('q')
+    cards = []
+    if query:
+        response = requests.get(f'{api_url}?name={query}')
+        cards = response.json().get('data', [])
+    return render(request, 'search_card.html', {'cards': cards, 'query': query})
 
 def random_card(request):
     response = requests.get(api_url)
