@@ -1,19 +1,58 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
 {% block content %}
 
-<h1>Random Card</h1>
+<div class="cardContainer">
+    <div class="cardImageSection">
 
-<div class="card">
-    <div>
-    <!-- <a href="{{ card.ygoprodeck_url }}"><img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}"></a> -->
-    <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
-        {% for image in card.card_images %}{% endfor %}
+        {% comment %} <img src="{% static 'static\img\ghostrick.jpg' %}" alt="img"> {% endcomment %}
 
+        <img id="img_card" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+        
     </div>
-    <div>
-        <h1>{{ card.name }}</h1>
-        <span>{{ card.desc }}</span>
+    
+    <div class="cardDescriptionsection" >
+
+        <div class="card-name">
+            <h3>{{ card.name }}</h3>
+        </div>
+
+        <div class="card-desc">
+            <strong>Descripción:</strong> {{ card.desc }}
+        </div>
+        <br>
+        <div>
+            {% if card.archetype %}
+                <strong>Arquetipo:</strong> {{ card.archetype }}
+            {% endif %}
+        </div>
+
+        <div>
+            {% if card.level %}
+                <strong>Nivel:</strong> {{ card.level }}
+            {% endif %}
+        </div>
+            
+        <div class="card-type">
+            <strong>Tipo:</strong> {{ card.type }}
+        </div>
+
+        <div class="card-race">
+            {% if card.race %}
+                <strong>Raza:</strong> {{ card.race }}
+            {% endif %}
+        </div>
+
+        <div class="card-price">
+            <strong>TCG Precio:</strong> {{ card.card_prices.0.tcgplayer_price }}$
+            <br>
+            <!-- <strong>Ebay Precio:</strong> {{ card.card_prices.0.ebay_price }}$
+            <br>
+            <strong>Amazon Precio:</strong> {{ card.card_prices.0.amazon_price }}$
+            <br>
+            <strong>CardMarket Precio:</strong> {{ card.card_prices.0.cardmarket_price }}$ -->
+        </div>
 
     </div>
 </div>
