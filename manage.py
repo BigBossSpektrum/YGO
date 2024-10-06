@@ -31,7 +31,7 @@ if __name__ == '__main__':
         ) from exc
 
     # Modifica esta línea para utilizar el puerto asignado por Render
-    port = os.environ.get("PORT", "8000")
+    port = os.environ.get("PORT", "10000")
     execute_from_command_line(sys.argv + ["runserver", "0.0.0.0:" + port])
 
-    #main()
+    main()
