@@ -19,7 +19,6 @@
     display: flex;
     text-align: start;
     flex-direction: column;
-    justify-content: flex-start;
     margin-top: 10px;
   }
 
