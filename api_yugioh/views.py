@@ -3,7 +3,6 @@ import random
 from django.shortcuts import render
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
-
 # api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Decode%20Talker'
 
 
