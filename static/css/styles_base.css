@@ -17,7 +17,7 @@ sidebar{
     gap: 240px;
     align-items: center;
     padding: 15px 25px;
-    background-color: #f2f2f2;
+    background-color: #1f1f1f;
     max-width: 100hv;
 }
 
@@ -210,7 +210,6 @@ sidebar{
 }
 img {
     width: 100%;
-    
 }
 
 .mainMenu_search {
@@ -242,8 +241,4 @@ img {
 .card{
     display: flex;
     max-width: 100vh;
-}
-
-#img_card{
-    width: 50%;
 }
