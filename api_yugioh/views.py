@@ -4,6 +4,7 @@ from django.shortcuts import render
 from requests.exceptions import RequestException
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
+<<<<<<< HEAD
 
 def get_cards_from_api(url):
     try:
@@ -13,6 +14,10 @@ def get_cards_from_api(url):
     except RequestException as e:
         print(f'Error al hacer la solicitud a la API: {e}')
         return []
+=======
+# api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Decode%20Talker'
+
+>>>>>>> aaba574b670c2c9a1786890bdb9e1f21b9f315a2
 
 def card_info_view(request):
     cards = get_cards_from_api(api_url)

@@ -2,11 +2,20 @@ asgiref==3.8.1
 certifi==2024.7.4
 charset-normalizer==3.3.2
 Django==5.1
+<<<<<<< HEAD
 fontawesomefree==6.6.0
 idna==3.7
 mysqlclient==2.2.4
 psycopg2-binary==2.9.9
+=======
+idna==3.7
+>>>>>>> parent of a40f91d (update)
 requests==2.32.3
 sqlparse==0.5.1
 tzdata==2024.1
+<<<<<<< HEAD
 urllib3==2.2.2
+=======
+urllib3==2.2.2
+fontawesomefree==6.6.0
+>>>>>>> aaba574b670c2c9a1786890bdb9e1f21b9f315a2
