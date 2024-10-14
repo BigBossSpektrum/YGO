@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+    {% for card in cards %}
+    <div class="grid-cards-container">
+
+        <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+        <!-- <p>{{ card.name }}</p>
+        <p>{{ card.desc }}</p> -->
+    </div>
+    {% endfor %}
+
+{% endblock %}

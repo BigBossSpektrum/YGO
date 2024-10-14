@@ -1,11 +1,13 @@
 import requests
 import random
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from requests.exceptions import RequestException
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.db import IntegrityError
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
-<<<<<<< HEAD
-
 def get_cards_from_api(url):
     try:
         response = requests.get(url)
@@ -14,10 +16,6 @@ def get_cards_from_api(url):
     except RequestException as e:
         print(f'Error al hacer la solicitud a la API: {e}')
         return []
-=======
-# api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Decode%20Talker'
-
->>>>>>> aaba574b670c2c9a1786890bdb9e1f21b9f315a2
 
 def card_info_view(request):
     cards = get_cards_from_api(api_url)
@@ -28,7 +26,7 @@ def card_info_view(request):
     else:
         context = {'error': 'No se pudieron obtener las cartas de la API'}
 
-    return render(request, 'base_main.html', context)
+    return render(request, 'cards_info_views.html', context)
 
 def home(request):
     return render(request, 'index.html')
@@ -62,5 +60,27 @@ def random_card(request):
     
     return render(request, 'random_card.html', context)
 
-def login(request):
+def login_user(request):  # noqa: F811
     return render(request, 'login.html')
+
+def signup(request):
+    if request.method == 'GET':
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
+    else:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                user = form.save()  # Guarda el usuario
+                login(request, user)  # Inicia sesión automáticamente
+                return redirect('home')
+            except IntegrityError:
+                return render(request, 'signup.html', {
+                    'form': form,
+                    'error': 'El nombre de usuario ya existe.'
+                })
+        else:
+            return render(request, 'signup.html', {
+                'form': form,
+                'error': 'Por favor corrige los errores en el formulario.'
+            })

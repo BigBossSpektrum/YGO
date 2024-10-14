@@ -14,9 +14,9 @@ sidebar{
     display: inline-flex;
     display: flex;
     flex-direction: row;
-    gap: 240px;
+    gap: 290px;
     align-items: center;
-    padding: 15px 25px;
+    padding: 15px 15px;
     background-color: #1f1f1f;
     max-width: 100hv;
 }
@@ -27,6 +27,13 @@ sidebar{
     gap: 10px;
     align-items: center;
     padding-left: 40px;
+}
+
+.mainMenu_buttons_login{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: end;
 }
 
 #search{
@@ -76,8 +83,8 @@ sidebar{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: 15px;
-    margin-left: 15px;
-    font-size: 35px;
+    margin-left: 10px;
+    font-size: 26px;
 }
 
 .btn-manager{
@@ -89,6 +96,7 @@ sidebar{
     padding-left: 65px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .btn-deck{
@@ -97,9 +105,10 @@ sidebar{
     color: white;
     font-size: 16px;
     cursor: pointer;
-    padding-left: 125px;
+    padding-left: 123px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .link_logoLinked{
@@ -148,8 +157,8 @@ sidebar{
 
 .mainMenu_styledName{
     font-size: 20px;
+    white-space: nowrap;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
 }
 
 .btn-login{
@@ -181,6 +190,7 @@ sidebar{
     font-weight: 800;
     cursor: pointer;
 }
+
 
 .btn-signup:hover{
     background-color: #206fee;

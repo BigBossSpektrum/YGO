@@ -1,0 +1,6 @@
+.grid-cards-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: minmax(100px, auto); /* Esto asegura que cada fila tenga un tamaño mínimo de 100px */
+  grid-gap: 10px; /* Esto agrega un espacio de 10px entre cada elemento */
+}

@@ -13,7 +13,14 @@
         <a href=""><i class="fa-solid fa-language"></i></a>
         <a href=""><i class="fa-solid fa-moon"></i></a>
         <a href=""><i class="fa-solid fa-dollar-sign"></i></a>
-        <a href="{% url 'login' %}" class="btn-login">Login In</a>
-        <a href="" class="btn-signup">Sing Up</a>
+        <div class="mainMenu_buttons_login">
+            {% comment %} Condicional para sesion activada/desactivada {% endcomment %}
+            {% if user.is_authenticated %}
+                <a href="logout" class="btn-signup">Log Out</a>
+            {% else %}
+                <a href="{% url 'login_user' %}" class="btn-login">Login In</a>
+                <a href="{% url 'signup' %}" class="btn-signup">Sing Up</a>
+            {% endif %}
+        </div>
     </div>
 </div>

@@ -10,4 +10,5 @@ urlpatterns = [
     path('random_card/', views.random_card, name='random_card'),
     path('search-cards/', views.search_cards, name='search_cards'),
     path('login/', views.login, name='login'),
+    path('signup/', views.signup, name='signup'),
 ]
