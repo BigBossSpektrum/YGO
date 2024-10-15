@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-section{
+form{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@ section{
 
 .container{
     position: relative;
-    width: 200px;
+    width: 400px;
     border: 2px solid rgba(255, 255, 255, 6);
     border-radius: 20px;
     backdrop-filter: blur(15px);

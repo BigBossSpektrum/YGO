@@ -1,20 +1,35 @@
-{% extends 'layouts/base.html' %}
-
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
+</head>
+<body>
     
-<section>
+    <!-- <form action="{% url 'login_user' %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Ingresar</button>
+    </form> -->
+
+<form action="{% url 'login_user' %}" method="POST">
+    {% csrf_token %}
     <div class="container">
         <div class="login">
             <form action="">
                 <h2>Iniciar Sesion</h2>
+                <div style="color: white;">{{error}}</div>
                 <div class="input-container">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="email" required>
-                    <label for="#">Email</label>
+                    <input type="text" name="username" required>
+                    <label for="#">Username</label>
                 </div>
                 <div class="input-container">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" required>
+                    <input type="password" name="password" required>
                     <label for="#">Password</label>
                 </div>
                 <div class="forgot">
@@ -24,15 +39,15 @@
                     </label>
                 </div>
                 <div>
-                    <button>Acceder</button>
+                    <button type="submit">Acceder</button>
                     <div class="register">
-                        <p>No tengo cuenta <a href="#">Crear una cuenta</a></p>
+                        <p>No tengo cuenta <a href="{% url 'home' %}">Crear una cuenta</a></p>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+</form>
 
-</section>
-{% endblock content %}
-    
+</body>
+</html>

@@ -19,10 +19,12 @@ from django.urls import path, include
 from django.shortcuts import render
 from django.conf import settings
 from api_yugioh import views
+from polls import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api_yugioh.urls')),
+    path('', include('polls.urls')),
 ]
 
 

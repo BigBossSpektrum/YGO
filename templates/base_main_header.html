@@ -16,6 +16,7 @@
         <div class="mainMenu_buttons_login">
             {% comment %} Condicional para sesion activada/desactivada {% endcomment %}
             {% if user.is_authenticated %}
+                <a href="" class="btn-login">{{ user.username }}</a>
                 <a href="logout" class="btn-signup">Log Out</a>
             {% else %}
                 <a href="{% url 'login_user' %}" class="btn-login">Login In</a>
