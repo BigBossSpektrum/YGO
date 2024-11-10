@@ -51,11 +51,15 @@ def search_cards(request):
 def random_card(request):
     cards = get_cards_from_api(api_url)
     
-    if cards:
-        random_card = random.choice(cards)
+    # Filtrar cartas que sean del tipo "Effect Monster"
+    effect_monsters = [card for card in cards if card['type'] == "Effect Monster"]
+    
+    # Seleccionar una carta monstruo de efecto aleatoria
+    if effect_monsters:
+        random_card = random.choice(effect_monsters)
         context = {'card': random_card}
     else:
-        context = {'error': 'No se pudieron obtener las cartas de la API'}
+        context = {'error': 'No se encontraron cartas del tipo "Effect Monster" o no se pudieron obtener las cartas de la API'}
     
     return render(request, 'random_card.html', context)
 

@@ -11,8 +11,8 @@ sidebar{
 }
 
 .mainMenu{
-    display: inline-flex;
     display: flex;
+    display: inline-flex;
     flex-direction: row;
     gap: 290px;
     align-items: center;
