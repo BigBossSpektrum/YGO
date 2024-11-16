@@ -18,7 +18,7 @@ sidebar{
     align-items: center;
     padding: 15px 15px;
     background-color: #1f1f1f;
-    max-width: 100hv;
+    max-width: 100%;
 }
 
 .mainMenu_buttons{
@@ -56,7 +56,7 @@ sidebar{
     padding-left: 10px;
     font-size: 18px;
     max-width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 .link_styledLink{

@@ -5,6 +5,7 @@ from requests.exceptions import RequestException
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import UsuarioForm
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
@@ -49,6 +50,7 @@ def search_cards(request):
     return render(request, 'search_card.html', context)
 
 def random_card(request):
+    
     cards = get_cards_from_api(api_url)
     
     # Filtrar cartas que sean del tipo "Effect Monster"
@@ -81,26 +83,27 @@ def login_user(request):  # noqa: F811
             return redirect('home')
 
 def signup(request):
-    if request.method == 'GET':
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
-    else:
-        form = UserCreationForm(request.POST)
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST) 
         if form.is_valid():
             try:
-                user = form.save()  # Guarda el usuario
-                login(request, user)  # Inicia sesión automáticamente
-                return redirect('home')
+                form.save()  # Intenta guardar los datos en la base de datos
+                return redirect('login_user')  # Redirige después de guardar el usuario
+
             except IntegrityError:
-                return render(request, 'signup.html', {
-                    'form': form,
-                    'error': 'El nombre de usuario ya existe.'
-                })
+                # Este error se lanzará si hay un valor duplicado en un campo único
+                #error = "El usuario o correo ya existe. Intenta con uno diferente."
+                error = "IntegrityError"
+                return render(request, 'signup.html', {'form': form, 'error': error})
+
         else:
-            return render(request, 'signup.html', {
-                'form': form,
-                'error': 'Por favor corrige los errores en el formulario.'
-            })
+            #error = "Formulario inválido. Verifica los datos ingresados."
+            error = "else"
+            return render(request, 'signup.html', {'form': form, 'error': error})
+
+    else:
+        form = UsuarioForm()  # Muestra el formulario vacío para un GET request
+        return render(request, 'signup.html', {'form': form})
 
 def signout(request):
     logout(request)
