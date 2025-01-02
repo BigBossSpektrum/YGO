@@ -47,12 +47,17 @@
 }
 
 .navbar_sidebar_style{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    height: 100vh;
     background-color: #2b2b2b;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding-left: 10px;
+    padding-left: 6px;
     font-size: 18px;
     max-width: 100vh;
     

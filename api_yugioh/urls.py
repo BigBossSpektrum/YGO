@@ -9,7 +9,7 @@ urlpatterns = [
     path('cards_info/', views.card_info_view, name='card_info_view'),
     path('random_card/', views.random_card, name='random_card'),
     path('search-cards/', views.search_cards, name='search_cards'),
-    path('login/', views.login_user, name='login_user'),
-    path('signup/', views.signup, name='signup'),
-    path('logout/', views.signout, name='logout'),
+    path('login/', views.login_user, name='login'),
+    path('register/', views.signout, name='register'),
+    path('signup/', views.register, name='signup'),
 ]

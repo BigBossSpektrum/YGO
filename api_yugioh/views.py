@@ -3,9 +3,11 @@ import random
 from django.shortcuts import render, redirect
 from requests.exceptions import RequestException
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth import login as auth_login
 from django.db import IntegrityError
-from .forms import UsuarioForm
+from .forms import UserRegistrationForm
+from django.contrib import messages
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
@@ -65,45 +67,61 @@ def random_card(request):
     
     return render(request, 'random_card.html', context)
 
-def login_user(request):  # noqa: F811
-    if request.method == 'GET':
-        return render(request, 'login.html', {
-            'form': AuthenticationForm
-        })
-    else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        
-        if user is None:
-            return render(request, 'login.html', {
-                'form': AuthenticationForm,
-                'error': 'Username or Password is incorrect.'
-            })
-        else:
-            login(request, user)
-            return redirect('home')
-
-def signup(request):
+def login_user(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST) 
-        if form.is_valid():
-            try:
-                form.save()  # Intenta guardar los datos en la base de datos
-                return redirect('login_user')  # Redirige después de guardar el usuario
-
-            except IntegrityError:
-                # Este error se lanzará si hay un valor duplicado en un campo único
-                #error = "El usuario o correo ya existe. Intenta con uno diferente."
-                error = "IntegrityError"
-                return render(request, 'signup.html', {'form': form, 'error': error})
-
+        # Intentar autenticar al usuario manualmente
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            auth_login(request, user)  # Si las credenciales son correctas, inicia sesión
+            return redirect('home')  # Redirige a la página principal
         else:
-            #error = "Formulario inválido. Verifica los datos ingresados."
-            error = "else"
-            return render(request, 'signup.html', {'form': form, 'error': error})
-
+            # Si la autenticación falla, renderiza la página de login con un error
+            messages.error(request, 'Usuario o contraseña incorrectos.')
+            return redirect('login')  # Redirige a la página de login para intentar nuevamente
     else:
-        form = UsuarioForm()  # Muestra el formulario vacío para un GET request
-        return render(request, 'signup.html', {'form': form})
+        form = AuthenticationForm()
+        return render(request, 'login.html', {'form': form})
+
+# def register(request):
+#     if request.method == 'GET':
+#         form = UserRegistrationForm()  # Muestra el formulario vacío
+#         return render(request, 'register.html', {'form': form})
+#     else:
+#         form = UserRegistrationForm(request.POST)
+#         if form.is_valid():
+#             try:
+#                 user = form.save()  # Guarda el usuario
+#                 auth_login(request, user)  # Inicia sesión automáticamente
+#                 return redirect('home')  # Redirige a la página principal
+#             except IntegrityError:
+#                 # Si hay un error de integridad (como nombre de usuario duplicado)
+#                 return render(request, 'signup.html', {
+#                     'form': form,
+#                     'error': 'El nombre de usuario ya existe.'
+#                 })
+#         else:
+#             # Si el formulario no es válido, muestra errores
+#             return render(request, 'register.html', {
+#                 'form': form,
+#                 'error': 'Por favor corrige los errores en el formulario.'
+#             })
+        
+def register(request):
+	if request.method == 'POST':
+		form = UserRegistrationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data['username']
+			messages.success(request, f'Usuario {username} creado')
+			return redirect('feed')
+	else:
+		form = UserRegistrationForm()
+
+	context = { 'form' : form }
+	return render(request, 'register.html', context)
 
 def signout(request):
     logout(request)
