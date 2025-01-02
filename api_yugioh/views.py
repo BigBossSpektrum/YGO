@@ -23,7 +23,7 @@ def card_info_view(request):
     cards = get_cards_from_api(api_url)
     
     if cards:
-        random_cards = random.sample(cards, 40)
+        random_cards = random.sample(cards, 10)
         context = {'cards': random_cards}
     else:
         context = {'error': 'No se pudieron obtener las cartas de la API'}

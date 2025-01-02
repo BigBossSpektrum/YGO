@@ -3,14 +3,10 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/cards_info_views.css' %}" type="text/css" >
-
+    
     {% for card in cards %}
-    <div class="grid-cards-container">
-
-        <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
-        <!-- <p>{{ card.name }}</p>
-        <p>{{ card.desc }}</p> -->
-    </div>
+    <a href=""><img id="img_cards_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
+</a>
     {% endfor %}
 
 {% endblock %}

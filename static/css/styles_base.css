@@ -148,14 +148,6 @@ sidebar{
     font-weight: 800;
 }
 
-.column{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding-top: 20px;    
-    padding-left: 20px;
-    
-}
-
 .mainMenu_styledName{
     font-size: 20px;
     white-space: nowrap;
@@ -199,11 +191,6 @@ sidebar{
     background-color: #206fee;
 }
 
-.content {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: 0.1fr 1fr auto;
-}
 
 .mainMenu_title {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -213,10 +200,6 @@ sidebar{
     padding-left: 20px;
 }
 
-#cards-container {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-}
 .card {
     text-align: center;
     

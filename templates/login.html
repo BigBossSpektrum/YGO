@@ -1,15 +1,12 @@
+{% extends 'layouts/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimensional Chaos</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
-</head>
-<body>
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
     
-<form action="{% url 'login' %}" method="POST">
+<form class="login-form" action="{% url 'login' %}" method="POST">
     {% csrf_token %}
 
     <div class="container">
@@ -52,6 +49,6 @@
     };
   </script>
 {% endblock scripts %}
-      
-</body>
-</html>
+
+
+{% endblock content %}
