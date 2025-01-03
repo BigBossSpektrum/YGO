@@ -6,8 +6,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as auth_login
 from django.db import IntegrityError
+
+from api_yugioh.models import Card
 from .forms import UserRegistrationForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
@@ -23,11 +26,31 @@ def card_info_view(request):
     cards = get_cards_from_api(api_url)
     
     if cards:
-        random_cards = random.sample(cards, 10)
+        random_cards = random.sample(cards, 20)
+        # Guardar cartas en la base de datos
+        for card in random_cards:
+            card_image = card['card_images'][0]['image_url']  # Obtener la URL de la imagen principal
+            Card.objects.get_or_create(
+                name=card['name'],
+                defaults={
+                    'image_url': card_image,
+                    'description': card.get('desc', '')  # Asegúrate de usar la clave correcta para la descripción
+                }
+            )
         context = {'cards': random_cards}
     else:
         context = {'error': 'No se pudieron obtener las cartas de la API'}
 
+    return render(request, 'cards_info_views.html', context)
+
+def saved_cards_view(request):
+    cards = Card.objects.all().order_by('-searched_at')  # Orden por fecha de búsqueda
+    paginator = Paginator(cards, 10)  # 10 cartas por página
+
+    page_number = request.GET.get('page')
+    page_cards = paginator.get_page(page_number)
+
+    context = {'page_cards': page_cards}
     return render(request, 'cards_info_views.html', context)
 
 def home(request):

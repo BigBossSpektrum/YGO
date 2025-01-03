@@ -11,3 +11,13 @@ class Usuarios(models.Model):
     ultimo_login = models.DateTimeField(auto_now=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     estado_activo = models.BooleanField(default=True)
+
+
+class Card(models.Model):
+    name = models.CharField(max_length=255)
+    image_url = models.URLField()
+    description = models.TextField(blank=True, null=True)
+    searched_at = models.DateTimeField(auto_now_add=True)  # Fecha de búsqueda
+
+    def __str__(self):
+        return self.name
