@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<h1>Resultados de la búsqueda</h1>
+
+{% if cards %}
+    <div class="card-container">
+        {% for card in cards %}
+            <div class="card">
+                <img src="{{ card.image_url }}" alt="{{ card.name }}">
+                <h3>{{ card.name }}</h3>
+                <p><strong>Tipo:</strong> {{ card.type }}</p>
+                <p><strong>Arquetipo:</strong> {{ card.archetype }}</p>
+                <p><strong>Rareza:</strong> {{ card.card_sets.0.set_rarity }}</p>
+                <p><strong>Set:</strong> {{ card.card_sets.0.set_name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No se encontraron cartas que coincidan con los criterios de búsqueda.</p>
+{% endif %}
+
+{% endblock %}

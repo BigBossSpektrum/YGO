@@ -4,6 +4,36 @@
 
 <link rel="stylesheet" href="{% static 'css/cards_info_views.css' %}" type="text/css" >
     
+<!-- Buscar cartas por filtro -->
+
+<form method="GET" action="{% url 'search_cards' %}">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" placeholder="Buscar por nombre">
+
+    <label for="type">Tipo:</label>
+    <select id="type" name="type">
+        <option value="">--Seleccionar tipo--</option>
+        <option value="Spell Card">Spell Card</option>
+        <option value="Trap Card">Trap Card</option>
+        <option value="Monster Card">Monster Card</option>
+    </select>
+
+    <label for="archetype">Arquetipo:</label>
+    <select name="archetype" id=""></select>
+
+    <label for="set_rarity">Rareza:</label>
+    <select id="set_rarity" name="set_rarity">
+        <option value="">--Seleccionar rareza--</option>
+        <option value="Common">Common</option>
+        <option value="Rare">Rare</option>
+        <option value="Ultra Rare">Ultra Rare</option>
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+
+
 <div class="pagination">
     {% if cards.has_previous %}
         <a href="?page={{ cards.previous_page_number }}" class="previous-page">Anterior</a>
@@ -26,7 +56,9 @@
     {% if cards.has_previous %}
         <a href="?page={{ cards.previous_page_number }}" class="previous-page">Anterior</a>
     {% endif %}
+
         <a href="?page={{ cards.next_page_number }}" class="next-page">Siguiente</a>
+
 </div>
 
 
