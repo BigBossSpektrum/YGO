@@ -1,27 +1,41 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/styles_base.css' %}"> -->
+<link rel="stylesheet" href="{% static 'css/base_main_header.css' %}">
 
 <div class="mainMenu">
 
-    <form class="mainMenu_search" method="GET" action="{% url 'search_cards' %}"> <!-- falta el action para buscar una carta -->
-        <input id="sendData" type="search" name="q" value="{{ query }}" placeholder="Search Yu-Gi-Oh! Cards">
-        <a href="{% url 'random_card' %}"><i class="fa-solid fa-shuffle" style="color: #ffffff;"></i></a>
-    </form>
-    
+    <div class="mainMenu_searchBar">
+        <form class="mainMenu_search" method="GET" action="{% url 'search_cards' %}"> <!-- falta el action para buscar una carta -->
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input  id="sendData" type="search" name="q" value="{{ query }}" placeholder="Search Yu-Gi-Oh! Cards">
+            <a href="{% url 'random_card' %}"><i class="fa-solid fa-shuffle" style="color: #ffffff;"></i></a>
+        </form>
+    </div>
+
     <div class="mainMenu_buttons">
-        <a href=""><i class="fa-solid fa-language"></i></a>
-        <a href=""><i class="fa-solid fa-moon"></i></a>
-        <a href=""><i class="fa-solid fa-dollar-sign"></i></a>
+        <div class="mainMenu_actionsStyle">
+            <a class="" href="" action=""><i class="fa-solid fa-language"></i></a>
+            <a class="" href="" action=""><i class="fa-solid fa-moon"></i></a>
+            <a class="" href="" action=""><i class="fa-solid fa-dollar-sign"></i></a>
+        </div>
+
         <div class="mainMenu_buttons_login">
             {% comment %} Condicional para sesion activada/desactivada {% endcomment %}
             {% if user.is_authenticated %}
                 <a href="" class="btn-login">{{ user.username }}</a>
-                <a href="logout" class="btn-signup">Log Out</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn-login">Login In</a>
+            {% endif %}
+        </div>
+        <div>
+            
+            {% if user.is_authenticated %}
+                <a href="logout" class="btn-signup">Log Out</a>
+            {% else %}
                 <a href="{% url 'signup' %}" class="btn-signup">Sing Up</a>
             {% endif %}
+                
         </div>
     </div>
 </div>

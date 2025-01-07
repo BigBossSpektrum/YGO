@@ -1,0 +1,107 @@
+.mainMenu{
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #1f1f1f;
+    min-height: 80px;
+    padding: 0px 2rem !important;
+
+}
+
+.mainMenu_search {
+    display: flex;
+    align-items: center;
+}
+
+.mainMenu_searchBar {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0%;
+    padding-right: 1rem;
+}
+
+.mainMenu_search input[type="search"] {
+    padding: 10px;
+    border: none; /* Elimina los bordes */
+    border-radius: 25px; /* Borde redondeado */
+    outline: none; /* Elimina el borde al hacer clic */
+    background-color: #f2f2f2; /* Fondo del campo */
+    width: 450px;
+    box-sizing: border-box;
+    opacity: 0.8;
+}
+
+.mainMenu_search a {
+    margin-left: 10px; /* Espacio entre el input y el ícono */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.mainMenu_actionsStyle{
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    padding: 10px 20px;
+    background-color: aqua;
+    border-radius: 15px;
+}
+
+
+.mainMenu_search i {
+    font-size: 24px; /* Tamaño del ícono */
+    color: #ffffff; /* Color blanco para el ícono */
+}
+
+.mainMenu_buttons{
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    /* flex-direction: row; */
+    gap: 1rem;
+    /* padding-left: 20px; */
+}
+
+.mainMenu_buttons_login{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: end;
+}
+
+.btn-login{
+    background-color: greenyellow;
+    text-decoration: none;
+    color: white;
+    /* padding: 20px; */
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 10px 20px;
+    white-space: nowrap;
+}
+
+.btn-login:hover{
+    background-color: #676770;
+}
+
+.btn-signup{
+    background-color: #3a86ff;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    flex-wrap: nowrap;
+}
+
+
+.btn-signup:hover{
+    background-color: #206fee;
+}

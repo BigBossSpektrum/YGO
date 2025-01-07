@@ -28,14 +28,14 @@ def card_info_view(request):
     
     if cards:
         random_cards = random.sample(cards, 20)
-        # Guardar cartas en la base de datos
+        #Guardar cartas en la base de datos
         for card in random_cards:
-            card_image = card['card_images'][0]['image_url']  # Obtener la URL de la imagen principal
+            card_image = card['card_images'][0]['image_url']  #Obtener la URL de la imagen principal
             Card.objects.get_or_create(
                 name=card['name'],
                 defaults={
                     'image_url': card_image,
-                    'description': card.get('desc', '')  # Asegúrate de usar la clave correcta para la descripción
+                    'description': card.get('desc', '')  #Asegúrate de usar la clave correcta para la descripción
                 }
             )
         context = {'cards': random_cards}
@@ -43,6 +43,7 @@ def card_info_view(request):
         context = {'error': 'No se pudieron obtener las cartas de la API'}
 
     return render(request, 'cards_info_views.html', context)
+
 
 def saved_cards_view(request): 
     cards = Card.objects.all().order_by('-searched_at')  # Orden por fecha de búsqueda
@@ -156,14 +157,14 @@ def signout(request):
 
 
 def search_cards_view(request):
-    # Obtén los parámetros de búsqueda desde la solicitud
+    #Obtén los parámetros de búsqueda desde la solicitud
     name = request.GET.get('name', '')
     card_type = request.GET.get('type', '')
     archetype = request.GET.get('archetype', '')
     set_name = request.GET.get('set_name', '')
     set_rarity = request.GET.get('set_rarity', '')
 
-    # Construir filtros para la API
+    #Construir filtros para la API
     params = {}
     if name:
         params['fname'] = name
@@ -176,7 +177,7 @@ def search_cards_view(request):
     if set_rarity:
         params['rarity'] = set_rarity
 
-    # Obtener datos de la API
+    #Obtener datos de la API
     url_with_params = api_url
     if params:
         url_with_params = f"{api_url}?{'&'.join([f'{k}={v}' for k, v in params.items()])}"
