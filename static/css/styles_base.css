@@ -10,32 +10,9 @@ sidebar{
     grid-template-columns: 20rem 1fr; 
 }
 
-.mainMenu{
-    display: flex;
-    display: inline-flex;
-    flex-direction: row;
-    gap: 260px;
-    align-items: center;
-    padding: 15px 15px;
-    background-color: #1f1f1f;
-    max-width: 100%;
-    flex-wrap: nowrap;
-}
 
-.mainMenu_buttons{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-    padding-left: 20px;
-}
 
-.mainMenu_buttons_login{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: end;
-}
+
 
 #search{
     width: 500px;
@@ -148,62 +125,14 @@ sidebar{
     font-weight: 800;
 }
 
-.column{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding-top: 20px;    
-    padding-left: 20px;
-    
-}
-
 .mainMenu_styledName{
     font-size: 20px;
     white-space: nowrap;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.btn-login{
-    background-color: #555555;
-    text-decoration: none;
-    color: white;
-    padding: 20px auto;
-    border-radius: 15px;
-    font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 800;
-    cursor: pointer;
-    padding-left: 20px;
-    padding-right: 20px;
-    flex-wrap: nowrap;
-}
-
-.btn-login:hover{
-    background-color: #676770;
-}
-
-.btn-signup{
-    background-color: #3a86ff;
-    text-decoration: none;
-    color: white;
-    padding: 20px auto;
-    border-radius: 15px;
-    font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 800;
-    cursor: pointer;
-    flex-wrap: nowrap;
-}
 
 
-.btn-signup:hover{
-    background-color: #206fee;
-}
-
-.content {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: 0.1fr 1fr auto;
-}
 
 .mainMenu_title {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -213,10 +142,6 @@ sidebar{
     padding-left: 20px;
 }
 
-#cards-container {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-}
 .card {
     text-align: center;
     
@@ -225,31 +150,7 @@ img {
     width: 100%;
 }
 
-.mainMenu_search {
-    display: flex;
-    align-items: center;
-}
 
-.mainMenu_search input[type="search"] {
-    padding: 10px;
-    border: none; /* Elimina los bordes */
-    border-radius: 25px; /* Borde redondeado */
-    outline: none; /* Elimina el borde al hacer clic */
-    background-color: #f2f2f2; /* Fondo del campo */
-    width: 450px;
-    box-sizing: border-box;
-    opacity: 0.8;
-}
-
-.mainMenu_search a {
-    margin-left: 10px; /* Espacio entre el input y el ícono */
-    text-decoration: none; /* Elimina el subrayado del enlace */
-}
-
-.mainMenu_search i {
-    font-size: 24px; /* Tamaño del ícono */
-    color: #ffffff; /* Color blanco para el ícono */
-}
 
 .card{
     display: flex;

@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
-
-
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/random_card.css' %}" type="text/css" >
     
 <div class="card-cardContainer">
     {% if cards %}

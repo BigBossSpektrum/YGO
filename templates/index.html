@@ -1,5 +1,17 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/cards_info_views.css' %}" type="text/css" >
     <h1>Home</h1>
+
+
+    <div class="cardContainer">
+        {% for card in cards %}
+            <div class="card">
+                <img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}">
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

@@ -1,45 +1,49 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimensional Chaos</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
-</head>
-<body>
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
     
-<form action="{% url 'login' %}" method="POST">
+<form class="login-form" action="{% url 'login' %}" method="POST">
     {% csrf_token %}
 
     <div class="container">
         <div class="login">
-            <form action="">
-                <h2>Iniciar Sesion</h2>
-                <div style="color: white;">{{error}}</div>
-                <div class="input-container">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="text" name="username" id="mi-input" required>
-                    <label for="#">Username</label>
+            <div class="login-container">
+                
+                <div class="login-card-info">
+                    <a href="{% url 'home' %}"> Dimensional Chaos <img src=""></a>
+                    <p>Dimensional Prison is the new place to buy and sell TCG CARDS</p>
                 </div>
-                <div class="input-container">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" name="password" id="mi-input" required>
-                    <label for="#">Password</label>
+                
+                <div class="login-card-form">
+                    <form action="">
+                        <h2>Iniciar Sesion</h2>
+                        <div style="color: white;">{{error}}</div>
+                        <div class="input-container">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="text" name="username" id="mi-input" required>
+                            <label for="#">Username</label>
+                        </div>
+                        <div class="input-container">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="mi-input" required>
+                            <label for="#">Password</label>
+                        </div>
+                        <div class="forgot">
+                            <label for="#">
+                                <input type="checkbox"> Recordar
+                                <a href="#">Olvide la contraseña</a>
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit">Acceder</button>
+                            <div class="register">
+                                <p>No tengo cuenta <a href="{% url 'signup' %}">Crear una cuenta</a></p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="forgot">
-                    <label for="#">
-                        <input type="checkbox"> Recordar
-                        <a href="#">Olvide la contraseña</a>
-                    </label>
-                </div>
-                <div>
-                    <button type="submit">Acceder</button>
-                    <div class="register">
-                        <p>No tengo cuenta <a href="{% url 'signup' %}">Crear una cuenta</a></p>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </form>
@@ -52,6 +56,6 @@
     };
   </script>
 {% endblock scripts %}
-      
-</body>
-</html>
+
+
+{% endblock content %}

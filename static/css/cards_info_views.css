@@ -1,6 +1,40 @@
-.grid-cards-container {
+.cardContainer {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-auto-rows: minmax(100px, auto); /* Esto asegura que cada fila tenga un tamaño mínimo de 100px */
-  grid-gap: 10px; /* Esto agrega un espacio de 10px entre cada elemento */
+  grid-template-columns: repeat(5, 1fr); /* 3 columnas, una por carta */
+  gap: 20px; /* Espacio entre las cartas */
+  margin: 20px;
+
+}
+
+.card {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.next-page,
+.previous-page {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: blueviolet;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.next-page:hover,
+.previous-page:hover {
+  background-color: #555;
 }

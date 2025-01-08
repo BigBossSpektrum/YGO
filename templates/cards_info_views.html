@@ -3,14 +3,34 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/cards_info_views.css' %}" type="text/css" >
+    
 
+<div class="pagination">
+    {% if cards.has_previous %}
+        <a href="?page={{ cards.previous_page_number }}" class="previous-page">Anterior</a>
+    {% endif %}
+        <a href="?page={{ cards.next_page_number }}" class="next-page">Siguiente</a>
+</div>
+
+<div class="cardContainer">
     {% for card in cards %}
-    <div class="grid-cards-container">
+        <div class="card">
+            <img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}">
 
-        <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
-        <!-- <p>{{ card.name }}</p>
-        <p>{{ card.desc }}</p> -->
-    </div>
+        </div>
     {% endfor %}
+</div>
+
+<!-- siguiente pagina -->
+
+<div class="pagination">
+    {% if cards.has_previous %}
+        <a href="?page={{ cards.previous_page_number }}" class="previous-page">Anterior</a>
+    {% endif %}
+
+        <a href="?page={{ cards.next_page_number }}" class="next-page">Siguiente</a>
+
+</div>
+
 
 {% endblock %}
