@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission
+from .validator import validate_password_strength
 
 # Create your models here.
 
@@ -12,6 +14,28 @@ class Usuarios(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     estado_activo = models.BooleanField(default=True)
 
+class CustomUser(AbstractUser):
+    password = models.CharField(
+        max_length=128,
+        validators=[validate_password_strength],
+        help_text="La contraseña debe incluir al menos una mayúscula, un número y un símbolo especial."
+    )
+
+    groups = models.ManyToManyField(
+        Group,
+        related_name="customuser_set",  # Cambia el nombre relacionado
+        blank=True,
+        help_text="Los grupos a los que pertenece este usuario.",
+        verbose_name="grupos"
+    )
+
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name="customuser_permissions_set",  # Cambia el nombre relacionado
+        blank=True,
+        help_text="Permisos específicos para este usuario.",
+        verbose_name="permisos de usuario"
+    )
 
 class CardSet(models.Model):
     card = models.ForeignKey('Card', on_delete=models.CASCADE, related_name='card_sets')

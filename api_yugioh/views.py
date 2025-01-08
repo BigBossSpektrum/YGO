@@ -156,18 +156,22 @@ def login_user(request):
 #             })
         
 def register(request):
-	if request.method == 'POST':
-		form = UserRegistrationForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username = form.cleaned_data['username']
-			messages.success(request, f'Usuario {username} creado')
-			return redirect('feed')
-	else:
-		form = UserRegistrationForm()
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            messages.success(request, f'Usuario {username} creado exitosamente.')
+            return redirect('feed')  # Redirige al feed después del registro
+        else:
+            # Agregar mensajes de error específicos si la validación falla
+            for error in form.errors.values():
+                messages.error(request, error)
+    else:
+        form = UserRegistrationForm()
 
-	context = { 'form' : form }
-	return render(request, 'register.html', context)
+    context = {'form': form}
+    return render(request, 'register.html', context)
 
 def signout(request):
     logout(request)
