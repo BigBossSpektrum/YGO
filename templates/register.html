@@ -14,7 +14,7 @@
         <div class="form-section">
             <h2>Sign Up</h2>
             <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
-            <form method="POST">
+            <form action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
                 <label for="email">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -30,17 +30,17 @@
                 {% endif %}
 
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="mi-input" required>
+                <input type="password1" name="password1" id="mi-input" required>
                 {% if form.password1.errors %}
                     <div class="alert">{{ form.password1.errors|join:", " }}</div>
                 {% endif %}
 
                 <label for="password">Password Confirmation:</label>
-                <input type="password" name="password2" id="mi-input" required>
+                <input type="password2" name="password2" id="mi-input" required>
                 {% if form.password2.errors %}
                     <div class="alert">{{ form.password2.errors|join:", " }}</div>
                 {% endif %}
-                
+
                 <p>By signing up, you agree to our <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.</p>
                 <button type="submit">Sign Up</button>
             </form>

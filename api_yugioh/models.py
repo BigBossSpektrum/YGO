@@ -5,8 +5,8 @@ from .validator import validate_password_strength
 # Create your models here.
 
 class Usuarios(models.Model):
-    username = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254)
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(max_length=254, unique=True)
     password1 = models.CharField(max_length=100)
     password2 = models.CharField(max_length=100)
 
@@ -15,7 +15,7 @@ class Usuarios(models.Model):
     estado_activo = models.BooleanField(default=True)
 
 class CustomUser(AbstractUser):
-    password = models.CharField(
+    password1 = models.CharField(
         max_length=128,
         validators=[validate_password_strength],
         help_text="La contraseña debe incluir al menos una mayúscula, un número y un símbolo especial."

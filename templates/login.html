@@ -18,6 +18,15 @@
                 {% csrf_token %}
                 <label for="email">Username:</label>
                 <input type="text" id="username" name="username" required>
+                {% if form.username.errors %}
+                    <div class="alert">{{ form.username.errors|join:", " }}</div>
+                {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <p>User letters and numbers. Allowed separators: - _ .</p>
 
                 <label for="password">Password:</label>
                 <input type="password" name="password" id="mi-input" required>

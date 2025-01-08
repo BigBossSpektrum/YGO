@@ -5,7 +5,7 @@ from requests.exceptions import RequestException
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as auth_login
-from django.db import IntegrityError
+from django.contrib.auth.models import User
 
 from api_yugioh.models import Card
 from .forms import UserRegistrationForm
@@ -115,19 +115,28 @@ def random_card(request):
 
 def login_user(request):
     if request.method == 'POST':
-        # Intentar autenticar al usuario manualmente
+        # Obtener el nombre de usuario y contraseña del formulario
         username = request.POST['username']
         password = request.POST['password']
+
+        # Verificar si el usuario existe en la base de datos
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Usuario no registrado.')
+            return redirect('login')  # Redirigir a la página de login
+        
+        # Intentar autenticar al usuario
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            auth_login(request, user)  # Si las credenciales son correctas, inicia sesión
+            # Si las credenciales son correctas, inicia sesión
+            auth_login(request, user)
             return redirect('home')  # Redirige a la página principal
         else:
-            # Si la autenticación falla, renderiza la página de login con un error
-            messages.error(request, 'Usuario o contraseña incorrectos.')
-            return redirect('login')  # Redirige a la página de login para intentar nuevamente
+            # Si la contraseña es incorrecta
+            messages.error(request, 'Contraseña incorrecta.')
+            return redirect('login')  # Redirige a la página de login
     else:
+        # Si no es un POST, renderiza el formulario de inicio de sesión
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
 
