@@ -150,9 +150,14 @@ button:hover{
     flex-direction: column;
 } */
 
+body{
+    background-image: none;
+}
+
+
 .container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
     height: 200px; /* ajusta el alto según tus necesidades */
@@ -165,4 +170,5 @@ button:hover{
     background-color: #ccc; /* fondo para visualizar los elementos */
     padding: 20px;
     box-sizing: border-box;
+    max-width: 50%;
 }
