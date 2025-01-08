@@ -4,23 +4,7 @@ from .validator import validate_password_strength
 
 # Create your models here.
 
-class Usuarios(models.Model):
-    username = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(max_length=254, unique=True)
-    password1 = models.CharField(max_length=100)
-    password2 = models.CharField(max_length=100)
-
-    ultimo_login = models.DateTimeField(auto_now=True)
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    estado_activo = models.BooleanField(default=True)
-
 class CustomUser(AbstractUser):
-    password1 = models.CharField(
-        max_length=128,
-        validators=[validate_password_strength],
-        help_text="La contraseña debe incluir al menos una mayúscula, un número y un símbolo especial."
-    )
-
     groups = models.ManyToManyField(
         Group,
         related_name="customuser_set",  # Cambia el nombre relacionado
@@ -35,6 +19,13 @@ class CustomUser(AbstractUser):
         blank=True,
         help_text="Permisos específicos para este usuario.",
         verbose_name="permisos de usuario"
+    )
+
+    # Asegúrate de que el validador personalizado se aplica al campo de contraseña
+    password = models.CharField(
+        max_length=128,  # Longitud del campo de contraseña
+        validators=[validate_password_strength],  # Aquí estamos aplicando el validador personalizado
+        help_text="La contraseña debe incluir al menos una mayúscula, un número y un símbolo especial."
     )
 
 class CardSet(models.Model):
