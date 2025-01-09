@@ -120,23 +120,6 @@ label {
     color: #333;
 }
 
-input {
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px;
-    font-size: 1rem;
-    color: white;
-    background: #007BFF;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
 }
 
 button:hover {
