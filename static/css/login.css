@@ -142,3 +142,9 @@ button {
 button:hover {
     background: #0056b3;
 }
+
+.alert {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 0.6rem;
+}

@@ -2,16 +2,15 @@ import requests
 import random
 from django.shortcuts import render, redirect
 from requests.exceptions import RequestException
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.models import User
 
 from api_yugioh.models import Card
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
+from .models import CustomUser
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
@@ -115,28 +114,30 @@ def random_card(request):
 
 def login_user(request):
     if request.method == 'POST':
-        # Obtener el nombre de usuario y contraseña del formulario
-        username = request.POST['username']
-        password = request.POST['password']
+        # Obtener datos del formulario
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        # Verificar si el usuario existe en la base de datos
-        if not User.objects.filter(username=username).exists():
+        # Verificar si el usuario existe
+        try:
+            user_exists = CustomUser.objects.get(username=username)
+        except CustomUser.DoesNotExist:
             messages.error(request, 'Usuario no registrado.')
-            return redirect('login')  # Redirigir a la página de login
-        
-        # Intentar autenticar al usuario
+            return redirect('login')
+
+        # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
-        
         if user is not None:
-            # Si las credenciales son correctas, inicia sesión
+            # Si las credenciales son válidas, inicia sesión
             auth_login(request, user)
+            messages.success(request, f'Bienvenido, {username}.')
             return redirect('home')  # Redirige a la página principal
         else:
-            # Si la contraseña es incorrecta
+            # Si las credenciales no son válidas
             messages.error(request, 'Contraseña incorrecta.')
-            return redirect('login')  # Redirige a la página de login
+            return redirect('login')
     else:
-        # Si no es un POST, renderiza el formulario de inicio de sesión
+        # Renderizar el formulario de login
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
 
