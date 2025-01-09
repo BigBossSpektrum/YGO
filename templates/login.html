@@ -3,50 +3,43 @@
 
 <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" >
     
-<form class="login-form" action="{% url 'login' %}" method="POST">
-    {% csrf_token %}
+<div class="container">
+    <div class="login-container">
+        <div class="info-section">
+            <a href="{% url 'home' %}"  class="logo"> <img src="{% static 'img/dimensionalPrison.jpg' %}" alt="Dimensional Chaos"> Dimensional Chaos</a>
+            <h1>Dimensional Chaos is your online store specialized in Yu-Gi-Oh! cards!
+                Here, you’ll find a wide selection of original cards, from the most iconic to the most exclusive, for casual players, collectors, and competitive duelists.</h1>
+            <h2>Sign up now for free and start on Dimensional Chaos</h2>
+        </div>
+        <div class="form-section">
+            <h2>Log In</h2>
+            <p>You don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <label for="email">Username:</label>
+                <input type="text" id="username" name="username" required>
+                {% if form.username.errors %}
+                    <div class="alert">{{ form.username.errors|join:", " }}</div>
+                {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <p>User letters and numbers. Allowed separators: - _ .</p>
 
-    <div class="container">
-        <div class="login">
-            <div class="login-container">
-                
-                <div class="login-card-info">
-                    <a href="{% url 'home' %}"> Dimensional Chaos <img src=""></a>
-                    <p>Dimensional Prison is the new place to buy and sell TCG CARDS</p>
-                </div>
-                
-                <div class="login-card-form">
-                    <form action="">
-                        <h2>Iniciar Sesion</h2>
-                        <div style="color: white;">{{error}}</div>
-                        <div class="input-container">
-                            <i class="fa-solid fa-envelope"></i>
-                            <input type="text" name="username" id="mi-input" required>
-                            <label for="#">Username</label>
-                        </div>
-                        <div class="input-container">
-                            <i class="fa-solid fa-lock"></i>
-                            <input type="password" name="password" id="mi-input" required>
-                            <label for="#">Password</label>
-                        </div>
-                        <div class="forgot">
-                            <label for="#">
-                                <input type="checkbox"> Recordar
-                                <a href="#">Olvide la contraseña</a>
-                            </label>
-                        </div>
-                        <div>
-                            <button type="submit">Acceder</button>
-                            <div class="register">
-                                <p>No tengo cuenta <a href="{% url 'signup' %}">Crear una cuenta</a></p>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="mi-input" required>
+                <a href="">Forgot your password?</a>
+
+                <p>By signing up, you agree to our <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.</p>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
         </div>
     </div>
-</form>
+
+</div>
+
 
 {% block scripts %}    
 <script>

@@ -1,21 +1,63 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dimensional Chaos - Registro</title>
-    <link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css">
-</head>
-<body>
+{% block content %}
 
-    <div>
-        <form action="{% url 'register' %}" method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">Registrarse</button>
-        </form>        
+<link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css" >
+    
+<div class="container">
+    <div class="login-container">
+        <div class="info-section">
+            <a href="{% url 'home' %}"  class="logo"> <img src="{% static 'img/dimensionalPrison.jpg' %}" alt="Dimensional Chaos"> Dimensional Chaos</a>
+            <h1>Dimensional Chaos is your online store specialized in Yu-Gi-Oh! cards!
+                Here, you’ll find a wide selection of original cards, from the most iconic to the most exclusive, for casual players, collectors, and competitive duelists.</h1>
+            <h2>Sign up now for free and start on Dimensional Chaos</h2>
+        </div>
+        <div class="form-section">
+            <h2>Sign Up</h2>
+            <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <label for="email">Username:</label>
+                <input type="text" id="username" name="username" required>
+                {% if form.username.errors %}
+                    <div class="alert">{{ form.username.errors|join:", " }}</div>
+                {% endif %}
+                <p>User letters and numbers. Allowed separators: - _ .</p>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                {% if form.email.errors %}
+                    <div class="alert">{{ form.email.errors|join:", " }}</div>
+                {% endif %}
+
+                <label for="password">Password:</label>
+                <input type="password1" name="password1" id="mi-input" required>
+                {% if form.password1.errors %}
+                    <div class="alert">{{ form.password1.errors|join:", " }}</div>
+                {% endif %}
+
+                <label for="password">Password Confirmation:</label>
+                <input type="password2" name="password2" id="mi-input" required>
+                {% if form.password2.errors %}
+                    <div class="alert">{{ form.password2.errors|join:", " }}</div>
+                {% endif %}
+
+                <p>By signing up, you agree to our <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.</p>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
     </div>
 
-</body>
-</html>
+</div>
+
+
+{% block scripts %}    
+<script>
+    // Asegura que el input esté vacío al cargar la página
+    window.onload = function() {
+      document.getElementById("mi-input").value = "";
+    };
+  </script>
+{% endblock scripts %}
+
+
+{% endblock content %}
