@@ -1,27 +1,34 @@
+# forms.py
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
+from django.core.exceptions import ValidationError
 
-from api_yugioh.models import CustomUser
-from .validator import validate_password_strength
+# Validador para contraseña
+def validate_password_strength(value):
+    if len(value) < 8:
+        raise ValidationError("La contraseña debe tener al menos 8 caracteres.")
+    if not any(char in "!@#$%^&*()_+[]{}|;:,.<>?/" for char in value):
+        raise ValidationError("La contraseña debe incluir al menos un carácter especial.")
 
 class UserRegistrationForm(UserCreationForm):
-    username = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=254, required=True)
+    email = forms.EmailField(required=True)
     password1 = forms.CharField(
-        label="Password",
+        label="Contraseña",
         widget=forms.PasswordInput(),
-        help_text="La contraseña debe incluir al menos una mayúscula, un número y un símbolo especial.",
-        required=True,
-        validators=[validate_password_strength]
+        validators=[validate_password_strength],  # Agregamos el validador personalizado
     )
     password2 = forms.CharField(
-        label="Password Confirmation",
-        widget=forms.PasswordInput(),
-        required=True
+        label="Confirmar Contraseña",
+        widget=forms.PasswordInput()
     )
 
     class Meta:
-        model = CustomUser  # Cambia 'User' por 'CustomUser'
+        model = CustomUser
         fields = ['username', 'email', 'password1', 'password2']
-        help_texts = {k: "" for k in fields}  # Esto desactiva los textos de ayuda predeterminados
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo ya está registrado.")
+        return email

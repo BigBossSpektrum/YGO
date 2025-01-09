@@ -140,47 +140,21 @@ def login_user(request):
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
 
-# def register(request):
-#     if request.method == 'GET':
-#         form = UserRegistrationForm()  # Muestra el formulario vacío
-#         return render(request, 'register.html', {'form': form})
-#     else:
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             try:
-#                 user = form.save()  # Guarda el usuario
-#                 auth_login(request, user)  # Inicia sesión automáticamente
-#                 return redirect('home')  # Redirige a la página principal
-#             except IntegrityError:
-#                 # Si hay un error de integridad (como nombre de usuario duplicado)
-#                 return render(request, 'signup.html', {
-#                     'form': form,
-#                     'error': 'El nombre de usuario ya existe.'
-#                 })
-#         else:
-#             # Si el formulario no es válido, muestra errores
-#             return render(request, 'register.html', {
-#                 'form': form,
-#                 'error': 'Por favor corrige los errores en el formulario.'
-#             })
-        
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            messages.success(request, f'Usuario {username} creado exitosamente.')
-            return redirect('feed')  # Redirige al feed después del registro
+            messages.success(request, "Registro exitoso. Ahora puedes iniciar sesión.")
+            return redirect('login')
         else:
-            # Agregar mensajes de error específicos si la validación falla
-            for error in form.errors.values():
-                messages.error(request, error)
+            messages.error(request, "Por favor, corrige los errores del formulario.")
+            # Imprime el error para debug
+            print(form.errors)  # Esto te ayudará a ver el problema directamente
     else:
         form = UserRegistrationForm()
 
-    context = {'form': form}
-    return render(request, 'register.html', context)
+    return render(request, 'register.html', {'form': form})
 
 def signout(request):
     logout(request)

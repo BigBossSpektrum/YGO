@@ -16,35 +16,40 @@
             <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
             <form action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
-                <label for="email">Username:</label>
-                <input type="text" id="username" name="username" required>
+                
+                <!-- Username -->
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ form.username.value }}" required>
                 {% if form.username.errors %}
                     <div class="alert">{{ form.username.errors|join:", " }}</div>
                 {% endif %}
-                <p>User letters and numbers. Allowed separators: - _ .</p>
-
+                <p>Username: Solo letras y números. Separadores permitidos: - _ .</p>
+            
+                <!-- Email -->
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="{{ form.email.value }}" required>
                 {% if form.email.errors %}
                     <div class="alert">{{ form.email.errors|join:", " }}</div>
                 {% endif %}
-
-                <label for="password">Password:</label>
-                <input type="password1" name="password1" id="mi-input" required>
+            
+                <!-- Password -->
+                <label for="password1">Password:</label>
+                <input type="password" name="password1" id="password1" required>
                 {% if form.password1.errors %}
                     <div class="alert">{{ form.password1.errors|join:", " }}</div>
                 {% endif %}
-
-                <label for="password">Password Confirmation:</label>
-                <input type="password2" name="password2" id="mi-input" required>
+                <p>La contraseña debe incluir al menos 8 caracteres, una mayúscula, un número y un símbolo especial.</p>
+            
+                <!-- Password Confirmation -->
+                <label for="password2">Confirm Password:</label>
+                <input type="password" name="password2" id="password2" required>
                 {% if form.password2.errors %}
                     <div class="alert">{{ form.password2.errors|join:", " }}</div>
                 {% endif %}
-
-                <p>By signing up, you agree to our <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>.</p>
-                <button type="submit">Sign Up</button>
+            
+                <button type="submit">Registrar</button>
             </form>
-        </div>
+                    </div>
     </div>
 
 </div>
