@@ -9,7 +9,7 @@
     <div class="cardContainer">
         {% for card in cards %}
             <div class="card">
-                <img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}">
+                <a href="{% url 'search_cards' %}?q={{ card.name }}"><img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}"></a>
             </div>
         {% endfor %}
     </div>

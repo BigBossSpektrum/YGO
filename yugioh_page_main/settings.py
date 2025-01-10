@@ -141,3 +141,4 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'api_yugioh.CustomUser'  # Reemplaza 'api_yugioh' con el nombre de tu aplicación
+
