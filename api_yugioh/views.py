@@ -23,24 +23,36 @@ def get_cards_from_api(url):
         return []
 
 def card_info_view(request):
-    cards = get_cards_from_api(api_url)
+    query = request.GET.get('q')  # Obtener el parámetro de búsqueda si existe
+    cards = []
     
-    if cards:
-        random_cards = random.sample(cards, 20)
-        #Guardar cartas en la base de datos
-        for card in random_cards:
-            card_image = card['card_images'][0]['image_url']  #Obtener la URL de la imagen principal
-            Card.objects.get_or_create(
-                name=card['name'],
-                defaults={
-                    'image_url': card_image,
-                    'description': card.get('desc', '')  #Asegúrate de usar la clave correcta para la descripción
-                }
-            )
-        context = {'cards': random_cards}
-    else:
-        context = {'error': 'No se pudieron obtener las cartas de la API'}
+    if query:  # Si hay un término de búsqueda
+        # Limpieza básica del input
+        query = query.strip()
+        if query:
+            api_query_url = f'{api_url}?name={query}'
+            cards = get_cards_from_api(api_query_url)
+    else:  # Si no hay búsqueda, mostrar cartas al azar
+        cards = get_cards_from_api(api_url)
+        if cards:
+            random_cards = random.sample(cards, 20)
+            # Guardar cartas en la base de datos
+            for card in random_cards:
+                card_image = card['card_images'][0]['image_url']  # Obtener la URL de la imagen principal
+                Card.objects.get_or_create(
+                    name=card['name'],
+                    defaults={
+                        'image_url': card_image,
+                        'description': card.get('desc', '')  # Asegúrate de usar la clave correcta para la descripción
+                    }
+                )
+            cards = random_cards
 
+    context = {
+        'cards': cards,
+        'query': query,  # Incluir el término de búsqueda en el contexto
+    }
+    
     return render(request, 'cards_info_views.html', context)
 
 
@@ -55,27 +67,27 @@ def saved_cards_view(request):
     return render(request, 'saved_cards.html', context)
 
 
-def home(request):
-    cards = get_cards_from_api(api_url)
+# def home(request):
+#     cards = get_cards_from_api(api_url)
     
-    if cards:
-        random_cards = random.sample(cards, 20)
-        #Guardar cartas en la base de datos
-        for card in random_cards:
-            card_image = card['card_images'][0]['image_url']  #Obtener la URL de la imagen principal
-            Card.objects.get_or_create(
-                name=card['name'],
-                defaults={
-                    'image_url': card_image,
-                    'description': card.get('desc', '')  #Asegúrate de usar la clave correcta para la descripción
-                }
-            )
-        context = {'cards': random_cards}
-    else:
-        context = {'error': 'No se pudieron obtener las cartas de la API'}
+#     if cards:
+#         random_cards = random.sample(cards, 20)
+#         #Guardar cartas en la base de datos
+#         for card in random_cards:
+#             card_image = card['card_images'][0]['image_url']  #Obtener la URL de la imagen principal
+#             Card.objects.get_or_create(
+#                 name=card['name'],
+#                 defaults={
+#                     'image_url': card_image,
+#                     'description': card.get('desc', '')  #Asegúrate de usar la clave correcta para la descripción
+#                 }
+#             )
+#         context = {'cards': random_cards}
+#     else:
+#         context = {'error': 'No se pudieron obtener las cartas de la API'}
 
 
-    return render(request, 'index.html', context)
+#     return render(request, 'index.html', context)
 
 
 def search_cards(request):

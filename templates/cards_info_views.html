@@ -4,6 +4,7 @@
 
 <link rel="stylesheet" href="{% static 'css/cards_info_views.css' %}" type="text/css" >
     
+{% include "base_main_header.html" %}  
 
 <div class="pagination">
     {% if cards.has_previous %}
@@ -15,8 +16,7 @@
 <div class="cardContainer">
     {% for card in cards %}
         <div class="card">
-            <img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}">
-
+            <a href="{% url 'search_cards' %}?q={{ card.name }}"><img src="{{ card.card_images.0.image_url|default:'https://via.placeholder.com/150' }}" alt="{{ card.name }}"></a>
         </div>
     {% endfor %}
 </div>
