@@ -1,26 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Resultados de la búsqueda</h1>
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Resultados de la búsqueda</h1>
 
 {% if cards %}
-    <div class="card-container">
+    <h2>Resultados para "{{ query }}"</h2>
+    <ul>
         {% for card in cards %}
-            <div class="card">
-                <img src="{{ card.image_url }}" alt="{{ card.name }}">
+            <li>
+                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}" style="max-width: 150px;" />
                 <h3>{{ card.name }}</h3>
                 <p><strong>Tipo:</strong> {{ card.type }}</p>
-                <p><strong>Arquetipo:</strong> {{ card.archetype }}</p>
-                <p><strong>Rareza:</strong> {{ card.card_sets.0.set_rarity }}</p>
-                <p><strong>Set:</strong> {{ card.card_sets.0.set_name }}</p>
-            </div>
+                <p><strong>Descripción:</strong> {{ card.desc }}</p>
+                <p><strong>Atributo:</strong> {{ card.attribute }}</p>
+                <p><strong>ATK:</strong> {{ card.atk }} | <strong>DEF:</strong> {{ card.def|default:"-" }}</p>
+                <p><strong>Rareza:</strong></p>
+                <ul>
+                    {% for set in card.card_sets %}
+                        <li>{{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD)</li>
+                    {% endfor %}
+                </ul>
+                <p><a href="{{ card.ygoprodeck_url }}" target="_blank">Más detalles</a></p>
+            </li>
         {% endfor %}
-    </div>
+    </ul>
 {% else %}
-    <p>No se encontraron cartas que coincidan con los criterios de búsqueda.</p>
+    <p>No se encontraron cartas. Intenta buscar con otro término.</p>
 {% endif %}
+
+{% endblock content %}

@@ -66,33 +66,8 @@ def saved_cards_view(request):
     context = {'cards': page_cards}  # Cambiado a 'cards' para coincidir con la plantilla
     return render(request, 'saved_cards.html', context)
 
-
-# def home(request):
-#     cards = get_cards_from_api(api_url)
-    
-#     if cards:
-#         random_cards = random.sample(cards, 20)
-#         #Guardar cartas en la base de datos
-#         for card in random_cards:
-#             card_image = card['card_images'][0]['image_url']  #Obtener la URL de la imagen principal
-#             Card.objects.get_or_create(
-#                 name=card['name'],
-#                 defaults={
-#                     'image_url': card_image,
-#                     'description': card.get('desc', '')  #Asegúrate de usar la clave correcta para la descripción
-#                 }
-#             )
-#         context = {'cards': random_cards}
-#     else:
-#         context = {'error': 'No se pudieron obtener las cartas de la API'}
-
-
-#     return render(request, 'index.html', context)
-
-
 def search_cards(request):
     cards = get_cards_from_api(api_url)
-
     query = request.GET.get('q')
     cards = []
     
@@ -105,6 +80,30 @@ def search_cards(request):
             cards = get_cards_from_api(api_query_url)
 
     context = {'cards': cards, 'query': query}
+    return render(request, 'search_cards.html', context)
+
+def card_search(request):
+    query = request.GET.get('q', '').strip()  # Obtener y limpiar el parámetro de búsqueda
+    cards = []
+
+    if query:
+        # Construir la URL de búsqueda con el término ingresado
+        api_query_url = f'{api_url}?name={query}'
+        try:
+            response = requests.get(api_query_url)
+            if response.status_code == 200:
+                cards = response.json().get('data', [])  # Asumiendo que devuelve una lista de cartas
+            else:
+                print(f"Error al consultar la API: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Excepción al consultar la API: {e}")
+
+    context = {
+        'cards': cards,
+        'query': query,
+    }
+
+    print(context)
     return render(request, 'search_cards.html', context)
 
 def home_or_search(request):

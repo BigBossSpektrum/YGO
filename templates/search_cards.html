@@ -2,88 +2,35 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/random_card.css' %}" type="text/css" >
-    
-<div class="card-cardContainer">
-    {% if cards %}
+<h1>Búsqueda de Cartas</h1>
+<form method="get" action="">
+    <input type="text" name="q" placeholder="Nombre de la carta" value="{{ query|default:'' }}">
+    <button type="submit">Buscar</button>
+</form>
+
+{% if cards %}
+    <h2>Resultados para "{{ query }}"</h2>
+    <ul>
         {% for card in cards %}
-        <div class="cardContainer">
-
-            <div class="leftSectionContainer">
-        
-                <div class="cardImageSection">
-        
-                    <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
-                    
-                </div>
-        
-                <div class="cardLimited">
-                    <div>cartas limitadas</div>
-                </div>
-        
-            </div>
-        
-            <div class="rightSectionContainer">
-        
-                <div class="cardDescriptionsection" >
-                    <div>
-                        <div class="card-name">
-                            <h3>{{ card.name }}</h3>
-                        </div>
-                
-                        <div class="card-desc">
-                             {{ card.desc }}
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="cardAtributes">
-
-                        <div>
-                            {% if card.attribute %}
-                            <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            {% if card.race %}
-                                <strong>TYPE:</strong> {{ card.race }}
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            {% if card.archetype %}
-                                <strong>ARQUETYPE:</strong> {{ card.archetype }}
-                            {% endif %}
-                        </div>
-               
-                        <div>
-                            {% if card.level %}
-                                <strong>LEVEL:</strong> {{ card.level }}
-                            {% endif %}
-                        </div>
-                                           
-                        <div>
-                            {% if card.atk %}
-                                <strong>ATK:</strong> {{ card.atk }}
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            {% if card.def %}
-                                <strong>DEF:</strong> {{ card.def }}
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            <strong>TCG Precio:</strong> {{ card.card_prices.0.tcgplayer_price }}$
-                        </div>
-                </div>
-        
-            </div>
+            <li>
+                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}" style="max-width: 150px;" />
+                <h3>{{ card.name }}</h3>
+                <p><strong>Tipo:</strong> {{ card.type }}</p>
+                <p><strong>Descripción:</strong> {{ card.desc }}</p>
+                <p><strong>Atributo:</strong> {{ card.attribute }}</p>
+                <p><strong>ATK:</strong> {{ card.atk }} | <strong>DEF:</strong> {{ card.def|default:"-" }}</p>
+                <p><strong>Rareza:</strong></p>
+                <ul>
+                    {% for set in card.card_sets %}
+                        <li> {{ set.set_code }} - {{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD)</li>
+                    {% endfor %}
+                </ul>
+                <p><a href="{{ card.ygoprodeck_url }}" target="_blank">Más detalles</a></p>
+            </li>
         {% endfor %}
-    {% else %}
-        <p>No se encontraron cartas.</p>
-    {% endif %}
-</div>
+    </ul>
+{% else %}
+    <p>No se encontraron cartas. Intenta buscar con otro término.</p>
+{% endif %}
 
 {% endblock %}
