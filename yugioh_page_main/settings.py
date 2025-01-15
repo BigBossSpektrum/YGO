@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #owned Apps
-    'polls',
     'api_yugioh',
     'fontawesomefree',
 ]
