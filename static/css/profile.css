@@ -1,0 +1,81 @@
+/* General para el body y el fondo */
+body {
+    background-color: #121212;  /* Fondo oscuro */
+    color: #E0E0E0;  /* Texto claro */
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del contenedor del perfil */
+.profile-container {
+    background-color: #1E1E1E;  /* Fondo más oscuro para el contenedor */
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);  /* Sombra suave */
+}
+
+/* Título del perfil */
+.profile-container h1 {
+    font-size: 36px;
+    text-align: center;
+    color: #FF9800;  /* Color para el título (puedes cambiarlo si prefieres otro) */
+    margin-bottom: 20px;
+}
+
+/* Estilo de la foto de perfil */
+.profile-img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    border: 3px solid #FF9800;  /* Borde para resaltar */
+}
+
+/* Información del perfil */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Elementos de información del perfil */
+.profile-info p {
+    font-size: 18px;
+    color: #E0E0E0;
+    text-align: center;
+    margin: 5px 0;
+}
+
+/* Estilo para los botones */
+.profile-btn {
+    background-color: #FF9800;
+    color: #121212;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: 200px;
+    margin: 20px 0;
+}
+
+.profile-btn:hover {
+    background-color: #FF5722;  /* Cambio de color al pasar el mouse */
+}
+
+/* Enlaces */
+.profile-info a {
+    color: #FF9800;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-info a:hover {
+    text-decoration: underline;
+}

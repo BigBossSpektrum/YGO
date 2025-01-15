@@ -23,14 +23,14 @@
         <div class="mainMenu_buttons_login">
             {% comment %} Condicional para sesion activada/desactivada {% endcomment %}
             {% if user.is_authenticated %}
-                <a href="" class="btn-login">{{ user.username }}</a>
+                <a href="{% url 'profile' %}" class="btn-login">{{ user.username }}</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn-login">Login In</a>
             {% endif %}
         </div>
         <div>
             {% if user.is_authenticated %}
-                <a href="signout" class="btn-signup">Log Out</a>
+                <a href="{% url 'signout' %}" class="btn-signup">Log Out</a>
             {% else %}
                 <a href="{% url 'signup' %}" class="btn-signup">Sing Up</a>
             {% endif %}

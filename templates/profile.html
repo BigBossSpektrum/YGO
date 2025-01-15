@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <title>Perfil de {{ user.username }}</title>
+</head>
+<body>
+    <h1>Bienvenido, {{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    {% if user.profile %}
+        <p>Biografía: {{ user.profile.bio }}</p>
+        {% if user.profile.avatar %}
+            <img src="{{ user.profile.avatar.url }}" alt="Avatar" width="150">
+        {% else %}
+            <p>No tienes un avatar.</p>
+        {% endif %}
+    {% else %}
+        <p>No tienes un perfil extendido configurado.</p>
+    {% endif %}
+    <a href="{% url 'home' %}">Regresar"></a>
+    <a href="{% url 'change_password' %}">Cambiar contraseña"></a>
+    <a href="{% url 'edit_profile' %}">Editar perfil</a>
+    <a href="{% url 'signout' %}">Cerrar sesión</a>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<form id="search-form" method="get" action="." onsubmit="return false;">
+    <!-- Filtro por texto -->
+    <label for="q">Buscar por nombre:</label>
+    <input type="text" id="q" name="q" value="{{ query }}" placeholder="Nombre de la carta" oninput="updateSearchResults()" />
+
+    <!-- Filtro por rango de ataque -->
+    <label for="min_atk">Ataque mínimo:</label>
+    <input type="number" id="min_atk" name="min_atk" value="{{ min_atk|default:'' }}" oninput="updateSearchResults()" />
+
+    <label for="max_atk">Ataque máximo:</label>
+    <input type="number" id="max_atk" name="max_atk" value="{{ max_atk|default:'' }}" oninput="updateSearchResults()" />
+
+    <label for="min_def">Defensa mínima:</label>
+    <input type="number" id="min_def" name="min_def" value="{{ min_def|default:'' }}" oninput="updateSearchResults()" />
+
+    <label for="max_def">Defensa máxima:</label>
+    <input type="number" id="max_def" name="max_def" value="{{ max_def|default:'' }}" oninput="updateSearchResults()" />
+
+    <!-- Filtro por tipos -->
+    <label for="type">Tipo de carta:</label>
+    <select id="type" name="type" multiple onchange="updateSearchResults()">
+        <option value="Link Monster" {% if "Link Monster" in card_types %}selected{% endif %}>Link Monster</option>
+        <option value="Spell Card" {% if "Spell Card" in card_types %}selected{% endif %}>Spell Card</option>
+        <option value="Trap Card" {% if "Trap Card" in card_types %}selected{% endif %}>Trap Card</option>
+        <option value="Normal Monster" {% if "Normal Monster" in card_types %}selected{% endif %}>Normal Monster</option>
+        <option value="Effect Monster" {% if "Effect Monster" in card_types %}selected{% endif %}>Effect Monster</option>
+        <option value="Ritual Monster" {% if "Ritual Monster" in card_types %}selected{% endif %}>Ritual Monster</option>
+        <option value="Fusion Monster" {% if "Fusion Monster" in card_types %}selected{% endif %}>Fusion Monster</option>
+        <option value="Synchro Monster" {% if "Synchro Monster" in card_types %}selected{% endif %}>Synchro Monster</option>
+        <option value="XYZ Monster" {% if "XYZ Monster" in card_types %}selected{% endif %}>XYZ Monster</option>
+        <!-- Agrega más tipos según sea necesario -->
+    </select>
+
+    <!-- Filtro por atributos -->
+    <label for="attribute">Atributo:</label>
+    <select id="attribute" name="attribute" multiple onchange="updateSearchResults()">
+        <option value="DARK" {% if "DARK" in attributes %}selected{% endif %}>DARK</option>
+        <option value="LIGHT" {% if "LIGHT" in attributes %}selected{% endif %}>LIGHT</option>
+        <option value="WIND" {% if "WIND" in attributes %}selected{% endif %}>WIND</option>
+        <option value="EARTH" {% if "EARTH" in attributes %}selected{% endif %}>EARTH</option>
+        <option value="WATER" {% if "WATER" in attributes %}selected{% endif %}>WATER</option>
+        <option value="FIRE" {% if "FIRE" in attributes %}selected{% endif %}>FIRE</option>
+        <option value="DIVINE" {% if "DIVINE" in attributes %}selected{% endif %}>DIVINE</option>
+        <!-- Agrega más atributos según sea necesario -->
+    </select>
+
+    <!-- Filtro por arquetipo -->
+    <label for="archetype">Arquetipo:</label>
+    <input type="text" id="archetype" name="archetype" value="{{ archetype }}" placeholder="Nombre del arquetipo" oninput="updateSearchResults()" />
+
+    <!-- Filtro por rango de estrellas -->
+    <label for="min_stars">Estrellas mínimas:</label>
+    <input type="number" id="min_stars" name="min_stars" value="{{ min_stars|default:'' }}" oninput="updateSearchResults()" />
+
+    <label for="max_stars">Estrellas máximas:</label>
+    <input type="number" id="max_stars" name="max_stars" value="{{ max_stars|default:'' }}" oninput="updateSearchResults()" />
+
+    <!-- Filtro por rareza -->
+    <label for="rarity">Rareza:</label>
+    <input type="text" id="rarity" name="rarity" value="{{ rarity }}" placeholder="Rareza (e.g. Ultra Rare)" oninput="updateSearchResults()" />
+
+    <button type="submit">Buscar</button>
+</form>
+
+<div id="results">
+    <ul>
+        {% for card in cards %}
+            <li>
+                <img src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}" style="max-width: 150px;" />
+                <h3>{{ card.name }}</h3>
+                <p><strong>Tipo:</strong> {{ card.type }}</p>
+                <p><strong>Descripción:</strong> {{ card.desc }}</p>
+                <p><strong>Atributo:</strong> {{ card.attribute }}</p>
+                <p><strong>ATK:</strong> {{ card.atk }} | <strong>DEF:</strong> {{ card.def|default:"-" }}</p>
+                <p><strong>Rareza:</strong></p>
+                <ul>
+                    {% for set in card.card_sets %}
+                        <li>{{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD)</li>
+                    {% endfor %}
+                </ul>
+                <p><a href="{{ card.ygoprodeck_url }}" target="_blank">Más detalles</a></p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="footer">
+    <div>
+        <div class="footer_title">
+            <h1>Dimensional Chaos</h1>
+        </div>
+        <div class="footer_description">
+            <p>Universe of Yu-Gi-Oh! Cards</p>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/results.js' %}"></script>
+
+{% endblock %}

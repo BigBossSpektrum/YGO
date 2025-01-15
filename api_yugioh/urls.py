@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 urlpatterns = [
@@ -14,4 +17,10 @@ urlpatterns = [
     path('search_cards/', views.search_cards, name='search_cards'),
     path('search', views.card_search, name='search'),
     path('signout/', views.signout, name='signout'),
+    path('profile/', views.profile_view, name='profile'),
+    path('change_password/', views.change_password, name='change_password'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
 ]
+
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

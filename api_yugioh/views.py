@@ -2,9 +2,11 @@ import requests
 import random
 from django.shortcuts import render, redirect
 from requests.exceptions import RequestException
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 from api_yugioh.models import Card
 from .forms import UserRegistrationForm
@@ -16,12 +18,13 @@ api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
     try:
         response = requests.get(url)
+        # print("Estado de la API:", response.status_code)
+        # print("Respuesta de la API:", response.json())
         response.raise_for_status()  # Lanza un error si el código de estado es 4xx o 5xx
         return response.json().get('data', [])
     except RequestException as e:
         print(f'Error al hacer la solicitud a la API: {e}')
         return []
-
 def card_info_view(request):
     query = request.GET.get('q')  # Obtener el parámetro de búsqueda si existe
     cards = []
@@ -54,8 +57,6 @@ def card_info_view(request):
     }
     
     return render(request, 'cards_info_views.html', context)
-
-
 def saved_cards_view(request): 
     cards = Card.objects.all().order_by('-searched_at')  # Orden por fecha de búsqueda
     paginator = Paginator(cards, 10)  # 10 cartas por página
@@ -65,7 +66,6 @@ def saved_cards_view(request):
 
     context = {'cards': page_cards}  # Cambiado a 'cards' para coincidir con la plantilla
     return render(request, 'saved_cards.html', context)
-
 def search_cards(request):
     cards = get_cards_from_api(api_url)
     query = request.GET.get('q')
@@ -81,31 +81,89 @@ def search_cards(request):
 
     context = {'cards': cards, 'query': query}
     return render(request, 'search_cards.html', context)
-
 def card_search(request):
-    query = request.GET.get('q', '').strip()  # Obtener y limpiar el parámetro de búsqueda
     cards = []
 
-    if query:
-        # Construir la URL de búsqueda con el término ingresado
-        api_query_url = f'{api_url}?name={query}'
-        try:
-            response = requests.get(api_query_url)
-            if response.status_code == 200:
-                cards = response.json().get('data', [])  # Asumiendo que devuelve una lista de cartas
-            else:
-                print(f"Error al consultar la API: {response.status_code}")
-        except requests.RequestException as e:
-            print(f"Excepción al consultar la API: {e}")
+    # Obtener los parámetros del filtro desde la solicitud (GET)
+    query = request.GET.get('q', '').strip()  # Filtro por nombre de carta
+    min_atk = request.GET.get('min_atk')  # Rango mínimo de ataque
+    max_atk = request.GET.get('max_atk')  # Rango máximo de ataque
+    min_def = request.GET.get('min_def')  # Rango mínimo de defensa
+    max_def = request.GET.get('max_def')  # Rango máximo de defensa
+    card_types = request.GET.getlist('type')  # Lista de tipos seleccionados
+    attributes = request.GET.getlist('attribute')  # Lista de atributos seleccionados
+    archetype = request.GET.get('archetype', '').strip()  # Filtro por arquetipo
+    min_stars = request.GET.get('min_stars')  # Rango mínimo de estrellas
+    max_stars = request.GET.get('max_stars')  # Rango máximo de estrellas
+    rarity = request.GET.get('rarity', '').strip()  # Filtro por rareza
 
+    try:
+        # Llamar a la API y obtener todas las cartas
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            all_cards = response.json()
+
+            # Filtro por nombre de carta (si se especificó en la búsqueda)
+            if query:
+                all_cards = [card for card in all_cards if query.lower() in card['name'].lower()]
+
+            # Filtro por rango de ataque
+            if min_atk:
+                all_cards = [card for card in all_cards if card.get('atk') and int(card['atk']) >= int(min_atk)]
+            if max_atk:
+                all_cards = [card for card in all_cards if card.get('atk') and int(card['atk']) <= int(max_atk)]
+
+            # Filtro por rango de defensa
+            if min_def:
+                all_cards = [card for card in all_cards if card.get('def') and int(card['def']) >= int(min_def)]
+            if max_def:
+                all_cards = [card for card in all_cards if card.get('def') and int(card['def']) <= int(max_def)]
+
+            # Filtro por tipos seleccionados
+            if card_types:
+                all_cards = [card for card in all_cards if card.get('type') in card_types]
+
+            # Filtro por atributos seleccionados
+            if attributes:
+                all_cards = [card for card in all_cards if card.get('attribute') in attributes]
+
+            # Filtro por arquetipo
+            if archetype:
+                all_cards = [card for card in all_cards if card.get('archetype') and archetype.lower() in card['archetype'].lower()]
+
+            # Filtro por rango de estrellas
+            if min_stars:
+                all_cards = [card for card in all_cards if card.get('level') and int(card['level']) >= int(min_stars)]
+            if max_stars:
+                all_cards = [card for card in all_cards if card.get('level') and int(card['level']) <= int(max_stars)]
+
+            # Filtro por rareza
+            if rarity:
+                all_cards = [card for card in all_cards if any(rarity.lower() in set.get('set_rarity', '').lower() for set in card.get('card_sets', []))]
+
+            # Asignar las cartas filtradas
+            cards = all_cards
+
+    except Exception as e:
+        print(f"Error al obtener datos de la API: {e}")
+
+    # Pasar los filtros y las cartas encontradas al contexto para el template
     context = {
         'cards': cards,
         'query': query,
+        'min_atk': min_atk,
+        'max_atk': max_atk,
+        'min_def': min_def,
+        'max_def': max_def,
+        'card_types': card_types,
+        'attributes': attributes,
+        'archetype': archetype,
+        'min_stars': min_stars,
+        'max_stars': max_stars,
+        'rarity': rarity,
     }
-
-    print(context)
-    return render(request, 'search_cards.html', context)
-
+ 
+    return render(request, 'partials_results.html', context)
 def home_or_search(request):
     query = request.GET.get('q')  # Obtener el parámetro de búsqueda si existe
     cards = []
@@ -138,8 +196,6 @@ def home_or_search(request):
     }
     
     return render(request, 'index.html', context)
-
-
 def random_card(request):
     
     cards = get_cards_from_api(api_url)
@@ -155,7 +211,6 @@ def random_card(request):
         context = {'error': 'No se encontraron cartas del tipo "Effect Monster" o no se pudieron obtener las cartas de la API'}
     
     return render(request, 'random_card.html', context)
-
 def login_user(request):
     if request.method == 'POST':
         # Obtener datos del formulario
@@ -184,7 +239,6 @@ def login_user(request):
         # Renderizar el formulario de login
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
-
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -200,12 +254,9 @@ def register(request):
         form = UserRegistrationForm()
 
     return render(request, 'register.html', {'form': form})
-
 def signout(request):
     logout(request)
     return redirect('home')
-
-
 def search_cards_view(request):
     #Obtén los parámetros de búsqueda desde la solicitud
     name = request.GET.get('name', '')
@@ -236,3 +287,34 @@ def search_cards_view(request):
 
     context = {'cards': cards}
     return render(request, 'search_results.html', context)  
+@login_required
+def profile_view(request):
+    return render(request, 'profile.html', {'user': request.user})
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            # Actualiza la sesión del usuario para que siga autenticado
+            update_session_auth_hash(request, form.user)
+            messages.success(request, 'Tu contraseña ha sido cambiada exitosamente.')
+            return redirect('profile')  # Redirigir al perfil después de cambiar la contraseña
+        else:
+            messages.error(request, 'Por favor corrige los errores.')
+    else:
+        form = PasswordChangeForm(request.user)
+    
+    return render(request, 'change_password.html', {'form': form})
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
+            return redirect('profile')  # Redirigir al perfil después de editarlo
+        else:
+            messages.error(request, 'Por favor corrige los errores.')
+    else:
+        form = UserChangeForm(instance=request.user)
+
+    return render(request, 'edit_profile.html', {'form': form})
