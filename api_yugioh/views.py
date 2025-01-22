@@ -195,7 +195,7 @@ def home_or_search(request):
         'query': query,  # Incluir el término de búsqueda en el contexto
     }
     
-    return render(request, 'index.html', context)
+    return render(request, 'page/index.html', context)
 def random_card(request):
     
     cards = get_cards_from_api(api_url)
@@ -238,7 +238,7 @@ def login_user(request):
     else:
         # Renderizar el formulario de login
         form = AuthenticationForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'user/login.html', {'form': form})
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -253,7 +253,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
 
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'user/register.html', {'form': form})
 def signout(request):
     logout(request)
     return redirect('home')
@@ -289,7 +289,7 @@ def search_cards_view(request):
     return render(request, 'search_results.html', context)  
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html', {'user': request.user})
+    return render(request, 'user/profile.html', {'user': request.user})
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -304,7 +304,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     
-    return render(request, 'change_password.html', {'form': form})
+    return render(request, 'page/change_password.html', {'form': form})
 def edit_profile(request):
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
@@ -317,4 +317,4 @@ def edit_profile(request):
     else:
         form = UserChangeForm(instance=request.user)
 
-    return render(request, 'edit_profile.html', {'form': form})
+    return render(request, 'user/edit_profile.html', {'form': form})
