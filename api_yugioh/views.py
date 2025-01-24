@@ -1,6 +1,6 @@
 import requests
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from requests.exceptions import RequestException
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import logout, authenticate
@@ -9,10 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 
 from api_yugioh.models import Card
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, CheckoutForm
 from django.contrib import messages
 from django.core.paginator import Paginator
-from .models import CustomUser
+from .models import CustomUser, Cart, Order, OrderItem, CartItem
 
 api_url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 def get_cards_from_api(url):
@@ -56,7 +56,7 @@ def card_info_view(request):
         'query': query,  # Incluir el término de búsqueda en el contexto
     }
     
-    return render(request, 'cards_info_views.html', context)
+    return render(request, 'page/cards_info_views.html', context)
 def saved_cards_view(request): 
     cards = Card.objects.all().order_by('-searched_at')  # Orden por fecha de búsqueda
     paginator = Paginator(cards, 10)  # 10 cartas por página
@@ -318,3 +318,52 @@ def edit_profile(request):
         form = UserChangeForm(instance=request.user)
 
     return render(request, 'user/edit_profile.html', {'form': form})
+
+def checkout(request):
+    # Obtener o crear el carrito del usuario
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # Crear un pedido
+            order = Order.objects.create(
+                user=request.user,
+                is_paid=False,
+                total_price=cart.total_price()
+            )
+            # Agregar ítems del carrito al pedido
+            for item in cart.cartitems.all():
+                OrderItem.objects.create(
+                    order=order,
+                    card=item.card,
+                    quantity=item.quantity
+                )
+            # Limpiar el carrito después de crear el pedido
+            cart.cartitems.all().delete()
+            return redirect('order_success')  # Redirigir a una página de éxito
+    else:
+        form = CheckoutForm()
+
+    return render(request, 'checkout.html', {'form': form, 'cart': cart})
+
+def order_success(request):
+    return render(request, 'order_success.html')
+
+def view_cart(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    return render(request, 'cart.html', {'cart': cart})
+
+def add_to_cart(request, card_id):
+    card = get_object_or_404(get_cards_from_api(api_url), id=card_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, card=card)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('view_cart')
+
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.delete()
+    return redirect('view_cart')
+

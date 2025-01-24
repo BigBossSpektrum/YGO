@@ -20,6 +20,12 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('change_password/', views.change_password, name='change_password'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('cart/', views.view_cart, name='view_cart'),
+    path('cart/add/<int:card_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('order_success/', views.order_success, name='order_success'),
+
 ]
 
 # if settings.DEBUG:

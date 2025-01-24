@@ -1,0 +1,18 @@
+extends 'layouts/base.html'
+{% load static %}
+{% block content %}
+<h1>Carrito de Compras</h1>
+    <ul>
+        {% for item in cart.cartitems.all %}
+            <li>
+                {{ item.card.name }} - {{ item.quantity }} x ${{ item.card.price }} = ${{ item.total_price }}
+                <a href="{% url 'remove_from_cart' item.id %}">Eliminar</a>
+            </li>
+        {% empty %}
+            <li>El carrito está vacío.</li>
+        {% endfor %}
+    </ul>
+    <h3>Total: ${{ cart.total_price }}</h3>
+    <a href="{% url 'checkout' %}">Proceder al Checkout</a>
+
+{% endblock %}

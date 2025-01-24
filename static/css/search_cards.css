@@ -2,10 +2,11 @@
 
 .cardContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: row;
   padding-top: 30px;
-
+  height: 100%;
+  width: 100%;
 }
 
 .cardImageSection {
@@ -33,6 +34,7 @@
 
 .cardAtributes, .cardLimited {
   flex-basis: 100%;
+  padding-top: 30px;
 }
 
 .card-name{
@@ -52,4 +54,32 @@
 .cardLimited{
   padding-top: 100px;
   padding-left: 30px;
+}
+
+.star {
+  align-self: center;
+  width: 20px;
+  height: 20px;
+}
+
+.attribute {
+  align-self: center;
+  width: 25px;
+  height: 25px;
+}
+
+.race-icon {
+  align-self: center;
+  width: 25px;
+  height: 25px;
+}
+
+.card-race{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+strong{
+  padding-right: 10px;
 }
