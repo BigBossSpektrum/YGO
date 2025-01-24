@@ -197,18 +197,33 @@ def home_or_search(request):
     
     return render(request, 'page/index.html', context)
 def random_card(request):
+    # Lista de tipos de cartas
+    card_types = ["Monster", "Spell", "Trap"]
     
+    # Seleccionar aleatoriamente un tipo de carta
+    selected_type = random.choice(card_types)
+    
+    # Obtener todas las cartas desde la API
     cards = get_cards_from_api(api_url)
     
-    # Filtrar cartas que sean del tipo "Effect Monster"
-    effect_monsters = [card for card in cards if card['type'] == "Effect Monster"]
+    # Filtrar las cartas basadas en el tipo seleccionado
+    filtered_cards = []
+    if selected_type == "Monster":
+        filtered_cards = [card for card in cards if "Monster" in card['type']]
+    elif selected_type == "Spell":
+        filtered_cards = [card for card in cards if "Spell" in card['type']]
+    elif selected_type == "Trap":
+        filtered_cards = [card for card in cards if "Trap" in card['type']]
     
-    # Seleccionar una carta monstruo de efecto aleatoria
-    if effect_monsters:
-        random_card = random.choice(effect_monsters)
-        context = {'card': random_card}
+    # Seleccionar una carta aleatoria del tipo seleccionado
+    if filtered_cards:
+        random_card = random.choice(filtered_cards)
+        context = {'card': random_card, 'type': selected_type}
     else:
-        context = {'error': 'No se encontraron cartas del tipo "Effect Monster" o no se pudieron obtener las cartas de la API'}
+        context = {
+            'error': f'No se encontraron cartas del tipo "{selected_type}" o no se pudieron obtener las cartas de la API.',
+            'type': selected_type,
+        }
     
     return render(request, 'random_card.html', context)
 def login_user(request):

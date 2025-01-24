@@ -30,6 +30,9 @@ class Card(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     card_type = models.CharField(max_length=50, blank=True, null=True)  # Tipo de carta (e.g., Monster, Spell)
+    archetype = models.CharField(max_length=100, blank=True, null=True)
+    rarity = models.CharField(max_length=50, blank=True, null=True)
+    race = models.CharField(max_length=50, blank=True, null=True)
     attribute = models.CharField(max_length=50, blank=True, null=True)  # Atributo (e.g., DARK, LIGHT)
     atk = models.IntegerField(blank=True, null=True)  # Ataque
     defense = models.IntegerField(blank=True, null=True)  # Defensa
