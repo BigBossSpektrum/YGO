@@ -1,5 +1,7 @@
 import requests
 import random
+from fuzzywuzzy import process
+
 from django.shortcuts import render, redirect, get_object_or_404
 from requests.exceptions import RequestException
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm
@@ -67,19 +69,43 @@ def saved_cards_view(request):
     context = {'cards': page_cards}  # Cambiado a 'cards' para coincidir con la plantilla
     return render(request, 'saved_cards.html', context)
 def search_cards(request):
+    # Obtener todas las cartas desde la API
     cards = get_cards_from_api(api_url)
-    query = request.GET.get('q')
-    cards = []
+    query = request.GET.get('q')  # Consulta del usuario
+    filtered_cards = []
     
     if query:
         # Limpieza básica del input
         query = query.strip()
         
         if query:
+            # Filtrar por nombre exacto
             api_query_url = f'{api_url}?name={query}'
-            cards = get_cards_from_api(api_query_url)
+            filtered_cards = get_cards_from_api(api_query_url)
+            
+            # Si no encuentra resultados exactos, usar búsqueda aproximada
+            if not filtered_cards:
+                # Extraer nombres y arquetipos para coincidencias aproximadas
+                card_names = [card['name'] for card in cards if 'name' in card]
+                archetypes = [card.get('archetype', '') for card in cards if 'archetype' in card]
 
-    context = {'cards': cards, 'query': query}
+                # Buscar coincidencias en nombres
+                closest_names = process.extract(query, card_names, limit=5)
+                closest_archetypes = process.extract(query, archetypes, limit=5)
+
+                # Extraer cartas relacionadas con las coincidencias
+                matched_names = [name for name, score in closest_names if score >= 70]  # Filtrar coincidencias fuertes
+                matched_archetypes = [arch for arch, score in closest_archetypes if score >= 70]
+                
+                filtered_cards = [
+                    card for card in cards if card['name'] in matched_names or card.get('archetype', '') in matched_archetypes
+                ]
+
+    context = {
+        'cards': filtered_cards,
+        'query': query,
+        'exact_match': bool(filtered_cards)  # Indica si hubo coincidencias exactas
+    }
     return render(request, 'search_cards.html', context)
 def card_search(request):
     cards = []

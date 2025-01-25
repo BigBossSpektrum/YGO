@@ -20,10 +20,10 @@
                 <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
                 
             </div>
-
+<!-- 
             <div class="cardLimited">
                 <div>cartas limitadas</div>
-            </div>
+            </div> -->
 
 
         </div>
@@ -42,42 +42,50 @@
                 </div>
             </div>
         
-            <div class="cardAtributes">
-                <div>
-                    {% if card.attribute %}
-                        <div class="card-attribute">
-                            {% if card.attribute == "DARK" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/DARK.svg' %}" alt="DARK">
-                            {% elif card.attribute == "DIVINE" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/DIVINE.svg' %}" alt="DIVINE">
-                            {% elif card.attribute == "EARTH" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/EARTH.svg' %}" alt="EARTH">
-                            {% elif card.attribute == "FIRE" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/FIRE.svg' %}" alt="FIRE">
-                            {% elif card.attribute == "LIGHT" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/LIGHT.svg' %}" alt="LIGHT">
-                            {% elif card.attribute == "WATER" %}
-                                <strong>ATRIBUTE:</strong>  {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/WATER.svg' %}" alt="WATER">
-                            {% elif card.attribute == "WIND" %}
-                                <strong>ATRIBUTE:</strong> {{ card.attribute }}
-                                <img class="attribute" src="{% static 'img/attribute/WIND.svg' %}" alt="WIND">
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-
+            <div class="cardStyleSection">
+                <div class="cardAtributes">
                     <div>
+                        {% if card.attribute %}
+                            <div class="card-attribute">
+                                {% if card.attribute == "DARK" %}
+                                    <strong>ATRIBUTE:</strong> 
+                                    <img class="attribute" src="{% static 'img/attribute/DARK.svg' %}" alt="DARK">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "DIVINE" %}
+                                    <strong>ATRIBUTE:</strong> 
+                                    <img class="attribute" src="{% static 'img/attribute/DIVINE.svg' %}" alt="DIVINE">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "EARTH" %}
+                                    <strong>ATRIBUTE:</strong> 
+                                    <img class="attribute" src="{% static 'img/attribute/EARTH.svg' %}" alt="EARTH">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "FIRE" %}
+                                    <strong>ATRIBUTE:</strong> 
+                                    <img class="attribute" src="{% static 'img/attribute/FIRE.svg' %}" alt="FIRE">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "LIGHT" %}
+                                    <strong>ATRIBUTE:</strong>
+                                    <img class="attribute" src="{% static 'img/attribute/LIGHT.svg' %}" alt="LIGHT">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "WATER" %}
+                                    <strong>ATRIBUTE:</strong>
+                                    <img class="attribute" src="{% static 'img/attribute/WATER.svg' %}" alt="WATER">
+                                    {{ card.attribute }}
+                                {% elif card.attribute == "WIND" %}
+                                    <strong   strong>ATRIBUTE:</strong>
+                                    <img class="attribute" src="{% static 'img/attribute/WIND.svg' %}" alt="WIND">
+                                    {{ card.attribute }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-level">
                         {% if card.level %}
-                            <strong>LEVEL:</strong>
-                            {% for i in card.level|to %}
+                            <strong>LEVEL:</strong>  <img class="star" src="{% static 'img/CG_Star.svg' %}" alt="">{{ card.level }}
+                            <!-- {% for i in card.level|to %}
                                 <img class="star" src="{% static 'img/CG_Star.svg' %}" alt="Star">
-                            {% endfor %}
+                            {% endfor %} -->
                         {% endif %}
                     </div>
 
@@ -190,33 +198,37 @@
                                         <div class="card-race">
                                             <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Zombie.webp' %}" alt="Zombie"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Normal Spells" %}
+                                    {% elif card.type == "Normal" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Normal_Spells.svg' %}" alt="Normal Spells"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Normal.svg' %}" alt="Normal Spells"> {{ card.race}} 
+                                        </div>
+                                    {% elif card.humanReadableCardType == "Normal Spell" %}
+                                        <div class="card-race">
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Normal.svg' %}" alt="Normal Spells"> {{ card.race}} 
                                         </div>
                                     {% elif card.race == "Continuous" %}
                                         <div class="card-race">
                                             <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Continuous.svg' %}" alt="Continuous Spells"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Equip Spells" %}
+                                    {% elif card.humanReadableCardType == "Equip Spell" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Equip_Spells.svg' %}" alt="Equip Spells"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Equip.svg' %}" alt="Equip Spells"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Quick-Play Spells" %}
+                                    {% elif card.humanReadableCardType == "Quick-Play" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Quick-Play_Spells.svg' %}" alt="Quick-Play Spells"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Quick-Play.svg' %}" alt="Quick-Play Spells"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Field Spells" %}
+                                    {% elif card.race == "Field" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Field_Spells.svg' %}" alt="Field Spells"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Field.svg' %}" alt="Field Spells"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Ritual Spells" %}
+                                    {% elif card.race == "Ritual" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Ritual_Spells.svg' %}" alt="Ritual Spells"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Ritual.svg' %}" alt="Ritual Spells"> {{ card.race}} 
                                         </div>
-                                    {% elif card.race == "Counter Traps" %}
+                                    {% elif card.race == "Counter" %}
                                         <div class="card-race">
-                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Counter_Traps.svg' %}" alt="Counter Traps"> {{ card.race}} 
+                                            <strong>TYPE:</strong> <img class="race-icon" src="{% static 'img/race/Counter.svg' %}" alt="Counter Traps"> {{ card.race}} 
                                         </div>
                                     {% elif card.race == "Normal Monsters" %}
                                         <div class="card-race">
@@ -259,38 +271,61 @@
                             </div>
 
                             
+                            
+                            {% else %}
+                            <p>No race information available for this card.</p>
+                        {% endif %}
+                        </div>
+                        <div class="card-archetype">
                             {% if card.archetype %}
                                 <strong>ARCHETYPE:</strong> {{ card.archetype }}
                             {% endif %}
-                                
-                        {% else %}
-                            <p>No race information available for this card.</p>
-                        {% endif %}
-                    </div>
-                    
+                        </div>
+                        
 
                                     
-                    <div>
-                        {% if card.atk %}
-                            <strong>ATK:</strong> {{ card.atk }} | <strong>DEF:</strong> {{ card.def }}
-                        {% endif %}
-                    </div>
+                        <div class="card-atk-def">
+                            {% if card.atk %}
+                                <strong>ATK:</strong> {{ card.atk }} 
+                            {% endif %}
+                        </div>
 
-                    <div>
-                        <strong>TCG Precio:</strong> {{ card.card_prices.0.tcgplayer_price }}$
+                        <div>
+                            {% if card.def %}
+                                <strong>DEF:</strong> {{ card.def }}
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            {% if card.card_sets %}
+                                <strong>CODE:</strong> {{ card.card_sets.0.set_code }}
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            
+                            {% if card.card_sets %}
+                                <strong>RARITY:</strong> {{ card.card_sets.0.set_rarity }}
+                            {% endif %}
+                                
+                        </div>
+
                     </div>
-                    <div>
-                        <strong>Other Market:</strong>
+                    <div class="card-other-market">
+                        <div>
+                            <strong>Market:</strong>
+                        </div>
+                        <ul>
+                            {% for set in card.card_sets %}
+                                <li> <a href="{{ set.set_url }}" target="_blank">{{ set.set_code}} - {{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD)</a></li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <ul>
-                        {% for set in card.card_sets %}
-                            <li> {{ set.set_code}} {{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD) <a href="{{ set.set_url }}" target="_blank">Comprar</a> </li>
-                        {% endfor %}
-                    </ul>
             </div>
         </div>
     </div>
 
+    {% endfor %}
     <div class="footer">
         <div>
             <div class="footer_title">
@@ -301,6 +336,5 @@
             </div>
         </div>
     </div>
-{% endfor %}
 
 {% endblock %}

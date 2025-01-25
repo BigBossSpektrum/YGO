@@ -34,8 +34,9 @@ class Card(models.Model):
     rarity = models.CharField(max_length=50, blank=True, null=True)
     race = models.CharField(max_length=50, blank=True, null=True)
     attribute = models.CharField(max_length=50, blank=True, null=True)  # Atributo (e.g., DARK, LIGHT)
-    atk = models.IntegerField(blank=True, null=True)  # Ataque
-    defense = models.IntegerField(blank=True, null=True)  # Defensa
+    humanReadableCardType = models.CharField(max_length=50, blank=True, null=True)
+    atk = models.IntegerField(blank=True, null=True, default=0)  # Ataque
+    defense = models.IntegerField(blank=True, null=True, default=0)  # Defensa
     level = models.IntegerField(blank=True, null=True)  # Nivel/Estrellas
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Precio de la carta
     image_url = models.URLField(blank=True, null=True)  # URL de la imagen de la carta
