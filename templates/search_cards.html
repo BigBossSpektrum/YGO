@@ -20,11 +20,6 @@
                 <img id="img_card_random" src="{{ card.card_images.0.image_url }}" alt="{{ card.name }}">
                 
             </div>
-<!-- 
-            <div class="cardLimited">
-                <div>cartas limitadas</div>
-            </div> -->
-
 
         </div>
 
@@ -83,9 +78,7 @@
                     <div class="card-level">
                         {% if card.level %}
                             <strong>LEVEL:</strong>  <img class="star" src="{% static 'img/CG_Star.svg' %}" alt="">{{ card.level }}
-                            <!-- {% for i in card.level|to %}
-                                <img class="star" src="{% static 'img/CG_Star.svg' %}" alt="Star">
-                            {% endfor %} -->
+
                         {% endif %}
                     </div>
 
@@ -315,9 +308,9 @@
                         <div>
                             <strong>Market:</strong>
                         </div>
-                        <ul>
+                        <ul class="card-list {% if card.card_sets|length > 3 %}scrollable{% endif %}">
                             {% for set in card.card_sets %}
-                                <li> <a href="{{ set.set_url }}" target="_blank">{{ set.set_code}} - {{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD)</a></li>
+                                <li> <a href="https://www.trollandtoad.com/category.php?selected-cat=0&search-words={{ set.set_code }}" target="_blank">{{ set.set_code}}</a> - {{ set.set_name }} - {{ set.set_rarity }}</li>
                             {% endfor %}
                         </ul>
                     </div>
