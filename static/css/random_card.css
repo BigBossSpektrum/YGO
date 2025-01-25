@@ -35,6 +35,9 @@
 .cardAtributes, .cardLimited {
   flex-basis: 100%;
   padding-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  gap: 20px;
 }
 
 .card-name{
@@ -82,4 +85,23 @@
 }
 strong{
   padding-right: 10px;
+}
+
+.card-other-market {
+  margin: 1rem 0;
+}
+.card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.card-list li {
+  margin: 0.5rem 0;
+}
+.scrollable {
+  max-height: 100px; /* Ajusta según el diseño */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
 }

@@ -263,13 +263,11 @@
                                 </div>
                             </div>
 
-                            
-                            
                             {% else %}
                             <p>No race information available for this card.</p>
                         {% endif %}
                         </div>
-                        <div class="card-archetype">
+                        <div class="card__archetype">
                             {% if card.archetype %}
                                 <strong>ARCHETYPE:</strong> {{ card.archetype }}
                             {% endif %}
@@ -277,26 +275,25 @@
                         
 
                                     
-                        <div class="card-atk-def">
+                        <div class="card__atk">
                             {% if card.atk %}
                                 <strong>ATK:</strong> {{ card.atk }} 
                             {% endif %}
                         </div>
 
-                        <div>
+                        <div class="card__def">
                             {% if card.def %}
                                 <strong>DEF:</strong> {{ card.def }}
                             {% endif %}
                         </div>
 
-                        <div>
+                        <div class="card__code">
                             {% if card.card_sets %}
                                 <strong>CODE:</strong> {{ card.card_sets.0.set_code }}
                             {% endif %}
                         </div>
 
-                        <div>
-                            
+                        <div class="card__rarity">
                             {% if card.card_sets %}
                                 <strong>RARITY:</strong> {{ card.card_sets.0.set_rarity }}
                             {% endif %}
@@ -304,7 +301,7 @@
                         </div>
 
                     </div>
-                    <div class="card-other-market">
+                    <div class="card__other__market">
                         <div>
                             <strong>Market:</strong>
                         </div>

@@ -37,8 +37,8 @@
                     </div>
                 </div>
             </div>
-        
-            <div class="cardAtributes">
+            <div class="cardStyleSection">
+                <div class="cardAtributes">
                 <div>
                     {% if card.attribute %}
                         <div class="card-attribute">
@@ -254,32 +254,54 @@
                                 </div>
                             </div>
                             
-                            {% if card.archetype %}
-                                <strong>ARCHETYPE:</strong> {{ card.archetype }}
-                            {% endif %}
-                                
-                        {% else %}
+                            {% else %}
                             <p>No race information available for this card.</p>
+                            {% endif %}
+                        </div>
+                        
+                    <div class="card__archetype">
+                        {% if card.archetype %}
+                            <strong>ARCHETYPE:</strong> {{ card.archetype }}
                         {% endif %}
                     </div>
                     
 
-                                    
-                    <div>
-                        {% if card.atk %}
-                            <strong>ATK:</strong> {{ card.atk }} | <strong>DEF:</strong> {{ card.def }}
+                                
+                    <div class="card__atk">
+                        {% if card.atk  %}
+                            <strong>ATK:</strong> {{ card.atk }} 
                         {% endif %}
                     </div>
 
-                    <div>
-                        <strong>TCG Precio:</strong> {{ card.card_prices.0.tcgplayer_price }}$
+                    <div class="card__def">
+                        {% if card.def %}
+                            <strong>DEF:</strong> {{ card.def }}
+                        {% endif %}
                     </div>
-                    <div>
-                        <strong>Other Market:</strong>
+
+                    <div class="card__code">
+                        {% if card.card_sets %}
+                            <strong>CODE:</strong> {{ card.card_sets.0.set_code }}
+                        {% endif %}
                     </div>
-                    <ul>
+
+                    <div class="card__rarity" >
+                        {% if card.card_sets %}
+                            <strong>RARITY:</strong> {{ card.card_sets.0.set_rarity }}
+                        {% endif %}
+                            
+                    </div>
+
+                </div>
+            </div>
+            
+                <div class="card__other__market">
+                    <div>
+                        <strong>Market:</strong>
+                    </div>
+                    <ul class="card-list {% if card.card_sets|length > 3 %}scrollable{% endif %}">
                         {% for set in card.card_sets %}
-                            <li> {{ set.set_code}} {{ set.set_name }} - {{ set.set_rarity }} ({{ set.set_price }} USD) <a href="{{ set.set_url }}" target="_blank">Comprar</a> </li>
+                            <li> <a href="https://www.trollandtoad.com/category.php?selected-cat=0&search-words={{ set.set_code }}" target="_blank">{{ set.set_code}}</a> {{ set.set_code}} {{ set.set_name }} - {{ set.set_rarity }}</li>
                         {% endfor %}
                     </ul>
             </div>
